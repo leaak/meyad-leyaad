@@ -1,0 +1,40 @@
+﻿@model MeyadLeyaad1.Models.Contribution
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="page-wrapper">
+
+  
+
+
+    <table class="table-gray">
+        <tr>
+            <th>קטגוריה</th>
+            <th>תת קטגוריה</th>
+            <th>עיר</th>
+            <th>שם התורם</th>
+            <th>סטטוס התרומה</th>
+            
+            <th>תמונה</th>
+        </tr>
+        @foreach (var item in ViewBag.list)
+{
+    <tr >
+
+
+        <td >@item.Category</td>
+        <td>@item.SubCategory</td>
+        <td>@item.City</td>
+        <td>@item.DonorName</td>
+        <td>@item.StatusName</td>
+     
+        <td><img src="@(item.PictureURL)" /></td>
+        <td class="td-links"><a href="@Url.Action("EditingDonation", "AddingDonation", new { id = @item.ID_Contribution })"> לפרטים ועריכה</a></td>
+
+
+
+    </tr>
+}
+    </table>                                         
+    </div>

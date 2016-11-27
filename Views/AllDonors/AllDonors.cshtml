@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "AllDonors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-wrapper">
+
+  
+
+
+    <table class="table-gray">
+        <tr>
+            <th>שם פרטי</th>
+            <th>שם משפחה</th>
+            <th>טלפון ניד</th>
+            <th>עיר</th>
+            <th>דוא"ל</th>
+        </tr>
+        @foreach (var item in ViewBag.list)
+        {
+            <tr>
+
+
+                <td>@item.First_Name</td>
+                <td>@item.Last_Name</td>
+                <td>@item.Phone</td>
+                <td>@item.City</td>
+                <td>@item.Email</td>
+                <td class="td-links"><a href="@Url.Action("EditingDonation", "AddingDonation" , item)"> לפרטים ועריכה</a></td>
+
+
+
+            </tr>
+        }
+    </table>
+</div>
+

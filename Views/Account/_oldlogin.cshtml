@@ -1,0 +1,83 @@
+﻿@model MeyadLeyyad1.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootsrtap Free Admin Template - SIMINTA | Admin Dashboad Template</title>
+    <!-- Core CSS - Include with every page -->
+    <link href="~/plugins/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/plugins/pace/pace-theme-big-counter.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/main-style.css" rel="stylesheet" />
+
+</head>
+
+<body class="body-Login-back">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
+                <img src="~/img/logo.png" alt="" />
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Please Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+                       <form role="form"  method="post">
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Email)
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                                <div class="form-group">
+                                    @*<input class="form-control" placeholder="Password" name="password" type="password" value="">*@
+                                    @Html.TextBoxFor(model => model.Password)
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                    </label>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <input type="submit" value="הכנס"/>
+                                @*<a href="@Url.Action("Index", "Index")" class="btn btn-lg btn-success btn-block" ">עבור לדף הבית</a>*@
+
+
+                            </fieldset>
+                           <p>
+                               @Html.ActionLink("Register", "Register") if you don't have an account.
+                           </p>
+                        </form>
+}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="~/plugins/jquery-1.10.2.js"></script>
+    <script src="~/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="~/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+</body>
+
+</html>
+
+

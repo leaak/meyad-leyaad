@@ -1,0 +1,279 @@
+﻿@model Tuple<MeyadLeyaad1.Models.Contribution, MeyadLeyaad1.Models.Picture>
+@{
+    ViewBag.Title = "AddingDonationForDonor";
+    Layout = "~/Views/Shared/_LoyoutDonor.cshtml";
+}
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <!-- page header -->
+        <div class="col-lg-12">
+            <h1 class="page-header">הצעת תרומה</h1>
+        </div>
+        <!--end page header -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <button type="submit" class="btn btn-primary" style="float:left">שמור</button>
+                    מילוי פרטי מוצר
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            @using (Html.BeginForm("AddingDonation", "AddingDonation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <form role="form">
+
+
+
+
+                                    <div class="form-group" style="width:20%">
+                                        <label>קטגוריה</label>
+                                        @Html.DropDownListFor(model => model.Item1.Category, (SelectList)ViewBag.ExemploList)
+                                    </div>
+                                    <div class="form-group" style="width:20%">
+                                        <label>תת קטגוריה</label>
+                                        <select class="form-control">
+                                            <option>מקרר</option>
+                                            <option>תנור</option>
+                                            <option>מיבש</option>
+                                        </select>
+                                    </div>
+                                    @*<div class="form-group" style="width:20%">
+                                        <label>שנים בשימוש</label>
+                                        <br />
+                                        @Html.TextBoxFor(model => model.)
+                                        @Html.ValidationMessageFor(model => model.First_Name)
+                                        </div>*@
+
+
+                                    <div class="form-group" style="width:20%">
+                                        <label>מצב מוצר</label>
+                                        @Html.DropDownListFor(model => model.Item1.Position, new SelectList(new[]{"חדש באריזה",
+                                    "כמו חדש", "משומש","דרוש תיקון או שיפוץ"})))
+                                    </div>
+
+                                    <div class="form-group" style="width:100%; display:block">
+                                        <label>תאור המוצר</label>
+                                        <br />
+                                        @Html.TextBoxFor(model => model.Item1.Description)
+                                    </div>
+                                    <script type="text/javascript">
+                                        function startRead(i, evt) {
+                                            var file = document.getElementById("file").files[0];
+                                            if (file) {
+                                                var tmppath = URL.createObjectURL(event.target.files[0]);
+                                                var img = document.getElementById("img" + i);//.url = tmppath;
+                                                img.setAttribute("src", tmppath);
+                                                //  getAsText(file);
+                                                // alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+                                            }
+                                        }
+                                    </script>
+
+
+
+                                    <br />
+                                    <div class="form-group">
+                                        <label>תמונה 1</label>
+                                        <input type="file" name="file1" onchange="startRead(1)" id="file">
+                                    </div>
+
+                                    <img class="form-group" id="img1" src="" style="width: 8%; height: 80px; background-image: url(); border: 1px solid black; padding: 2px 2px 4px 4px" />
+
+                                    <div class="form-group">
+                                        <label>תמונה 2</label>
+                                        <input type="file" name="file2" onchange="startRead(2)" id="file" />
+                                    </div>
+                                    <img class="form-group" id="img2" src="" style="width: 8%; height: 80px; background-image: url(); border: 1px solid black; padding: 2px 2px 4px 4px" />
+
+
+                                    <br />
+                                    <script type="text/javascript">
+                                        function show(elementId) {
+                                            document.getElementById(elementId).style.display = "block";
+                                        }
+                                    </script>
+
+
+                                    <button type="button" onclick="show('another_img');">הוסף תמונות</button>
+                                    <div id="another_img" style="display:none">
+
+                                        <div class="form-group">
+                                            <label>תמונה3</label>
+                                            <input type="file" name="file3" onchange="startRead(3)" id="file">
+                                        </div>
+
+                                        <img class="form-group" id="img3" src="" style="width: 8%; height: 80px; background-image: url(); border: 1px solid black; padding: 2px 2px 4px 4px" />
+
+                                        <div class="form-group">
+                                            <label>תמונה 4</label>
+                                            <input type="file" name="file4" onchange="startRead(4)" id="file" />
+                                        </div>
+                                        <img class="form-group" id="img4" src="" style="width: 8%; height: 80px; background-image: url(); border: 1px solid black; padding: 2px 2px 4px 4px" />
+
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="float: right; display: block">שמור</button>
+                                    <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
+
+                                </form>
+                            }
+                            <script>
+                                alert(@TempData["Message"]);
+                            </script>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+    <div class="row">
+        <!--Info Pannel, Warning Panel And Danger Panel   -->
+        <div class="col-lg-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Info Panel
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+                <div class="panel-footer">
+                    Panel Footer
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    Warning Panel
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+                <div class="panel-footer">
+                    Panel Footer
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    Danger Panel
+                </div>
+                <div class="panel-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                </div>
+                <div class="panel-footer">
+                    Panel Footer
+                </div>
+            </div>
+        </div>
+        <!--End Info Pannel, Warning Panel And Danger Panel   -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!--Collapsible Accordion Panel Group   -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Collapsible Accordion Panel Group
+                </div>
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Collapsible Group Item #1</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Collapsible Accordion Panel Group   -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <!--Basic Tabs   -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Basic Tabs
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#Index" data-toggle="tab">Index</a>
+                        </li>
+                        <li>
+                            <a href="#profile" data-toggle="tab">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#messages" data-toggle="tab">Messages</a>
+                        </li>
+                        <li>
+                            <a href="#settings" data-toggle="tab">Settings</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="Index">
+                            <h4>Index Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div class="tab-pane fade" id="profile">
+                            <h4>Profile Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div class="tab-pane fade" id="messages">
+                            <h4>Messages Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                        <div class="tab-pane fade" id="settings">
+                            <h4>Settings Tab</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Basic Tabs   -->
+        </div>
+    </div>
+    <!--End Pill Tabs   -->
+</div>

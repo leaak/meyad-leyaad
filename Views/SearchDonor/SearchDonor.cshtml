@@ -1,0 +1,111 @@
+﻿@model MeyadLeyaad1.Models.Donor
+@{
+    ViewBag.Title = "SearchDonor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <!-- page header -->
+        <div class="col-lg-12">
+            <h1 class="page-header">חיפוש תורם</h1>
+        </div>
+        <!--end page header -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Form Elements -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <button type="submit" class="btn btn-primary" style="float:left">שמור</button>
+                    חיפוש תורם
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form role="form">
+                                <div class="form-group" style="width:100%; display:block">
+                                    <label>מייל של התורם</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.Email)
+                                </div>
+
+                                <div class="form-group" style="width:100%; display:block">
+                                    <label>עיר</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.City)
+                                </div>
+
+                                <br />
+                              
+                                <div class="form-group" style="width:8%;height:80px;background-image:url();border:1px solid black; padding:2px 2px 4px 4px">
+
+                                </div>
+                                <br />
+
+                                <table>
+                                    @foreach (var item in ViewBag.list)
+                                    {
+                                        <tr>
+
+
+                                            <td>@item.Category</td>
+                                            <td>@item.Sub_Category</td>
+                                            <td>@item.Position</td>
+                                            <td>@item.Description</td>
+                                            <td>@item.Modified_Status_Date</td>
+                                            <td><a href="@Url.Action("EditingDonation", "AddingDonation" , item)"> לפרטים ועריכה</a></td>
+
+
+
+                                        </tr>
+                                    }
+                                </table>
+
+                                <button type="submit" class="btn btn-primary" style="float: right; display: block">שמור</button>
+                                <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Form Elements -->
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <!--Basic Tabs   -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Basic Tabs
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#Index" data-toggle="tab">Index</a>
+                        </li>
+                        <li>
+                            <a href="#profile" data-toggle="tab">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#messages" data-toggle="tab">Messages</a>
+                        </li>
+                        <li>
+                            <a href="#settings" data-toggle="tab">Settings</a>
+                        </li>
+                    </ul>
+
+                    
+                </div>
+            </div>
+            <!--End Basic Tabs   -->
+        </div>
+    </div>
+    <!--End Pill Tabs   -->
+</div>

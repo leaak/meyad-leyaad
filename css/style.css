@@ -1,0 +1,562 @@
+
+/*Copyright  2013-2014 Iron Summit Media Strategies
+
+    URI: http://http://www.ironsummitmedia.com/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.*/
+
+
+
+/* Global Styles */
+
+/* ------------------------------- */
+
+body {
+    background-color: #f8f8f8;
+}
+
+/* Wrappers */
+
+/* ------------------------------- */
+
+#wrapper {
+    width: 100%;
+    margin-top: 55px !important;
+    background-color: #04B173;
+}
+
+
+#page-wrapper {
+    padding: 0 15px;
+    min-height: 568px;
+    background-color: rgb(209, 212, 216);
+    direction: rtl;
+}
+#page-wrapper.sec{
+    padding:100px 300px 0 0;
+}
+
+
+
+
+.navbar-static-side ul li {
+    border-bottom: 1px solid #84B899 !important;
+}
+
+/* Navigation */
+
+/* ------------------------------- */
+
+/* Top Right Navigation Dropdown Styles */
+
+.navbar-top-links li {
+    display: inline-block;
+}
+
+    .navbar-top-links li:last-child {
+        margin-right: 15px;
+    }
+
+    .navbar-top-links li a {
+        padding: 20px;
+        min-height: 50px;
+    }
+
+.navbar-top-links .dropdown-menu li {
+    display: block;
+}
+
+    .navbar-top-links .dropdown-menu li:last-child {
+        margin-right: 0;
+    }
+
+    .navbar-top-links .dropdown-menu li a {
+        padding: 3px 20px;
+        min-height: 0;
+    }
+
+        .navbar-top-links .dropdown-menu li a div {
+            white-space: normal;
+        }
+
+.navbar-top-links .dropdown-messages,
+.navbar-top-links .dropdown-tasks,
+.navbar-top-links .dropdown-alerts {
+    width: 310px;
+    min-width: 0;
+}
+
+.navbar-top-links .dropdown-messages {
+    margin-left: 5px;
+}
+
+.navbar-top-links .dropdown-tasks {
+    margin-left: -59px;
+}
+
+.navbar-top-links .dropdown-alerts {
+    margin-left: -123px;
+}
+
+.navbar-top-links .dropdown-user {
+    right: 0;
+    left: auto;
+}
+
+/* Sidebar Menu Styles */
+
+.sidebar-search {
+    padding: 15px;
+}
+
+.arrow {
+    float: left;
+}
+
+.fa.arrow:before {
+    content: "\f104";
+}
+
+.active > a > .fa.arrow:before {
+    content: "\f107";
+}
+
+.nav-second-level li,
+.nav-third-level li {
+    border-bottom: none !important;
+}
+
+    .nav-second-level li a {
+        padding-left: 37px;
+    }
+
+    .nav-third-level li a {
+        padding-left: 52px;
+    }
+
+
+
+/* Buttons */
+
+/* ------------------------------- */
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+    .btn-primary.btn-outline:hover,
+    .btn-success.btn-outline:hover,
+    .btn-info.btn-outline:hover,
+    .btn-warning.btn-outline:hover,
+    .btn-danger.btn-outline:hover {
+        color: #fff;
+    }
+
+/* Pages */
+
+/* ------------------------------- */
+
+/* Dashboard Chat */
+
+.chat {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #B3A9A9;
+    }
+
+        .chat li.left .chat-body {
+            margin-left: 60px;
+        }
+
+        .chat li.right .chat-body {
+            margin-right: 60px;
+        }
+
+        .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
+
+    .panel .slidedown .glyphicon,
+    .chat .glyphicon {
+        margin-right: 5px;
+    }
+
+.chat-panel .panel-body {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+
+.body-Backcolor {
+    background-color: #000;
+}
+
+.logo-margin {
+    margin-top: 100px;
+}
+
+/* Flot Chart Containers */
+
+.flot-chart {
+    display: block;
+    height: 400px;
+}
+
+.flot-chart-content {
+    width: 100%;
+    height: 100%;
+}
+
+/* DataTables Overrides */
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    background: transparent;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    content: "\f0dc";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+
+/* Circle Buttons */
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+}
+
+    .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        border-radius: 25px;
+        font-size: 18px;
+        line-height: 1.33;
+    }
+
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        border-radius: 35px;
+        font-size: 24px;
+        line-height: 1.33;
+    }
+
+.show-grid [class^="col-"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee !important;
+}
+
+.show-grid {
+    margin: 15px 0;
+}
+
+
+/*Tammi's changes:*/
+
+/*HEADER*/
+
+.img-baner {
+    width: 160px;
+    margin: 10px;
+}
+
+.text {
+    float: right;
+    height: 300px;
+    width: 300px;
+    text-align: justify;
+    margin-right: 52px;
+    clear: right;
+    direction: rtl;
+    color: #762d74;
+}
+
+    .text p {
+        color: #762d74;
+        font-weight: bold;
+    }
+
+    .text h1 {
+        color: #762d80;
+        text-shadow: 2px 2px 0 #f2dede;
+        font-weight: bold;
+    }
+
+
+
+
+
+
+
+
+/* Login Page */
+.container {
+    margin: auto;
+}
+
+.panel-default > .panel-heading {
+    color: #fff;
+    background-color: #762d80;
+}
+
+.login-panel {
+    display: inline-block;
+    float: right;
+    margin: 20px 50px 0 0;
+    width: 300px;
+}
+
+    .login-panel label {
+        display: inline-block;
+        float: right;
+        margin: 10px 0;
+    }
+
+    .login-panel input {
+        width: 65%;
+        float: left;
+        margin: 10px 0;
+    }
+
+    .login-panel .btn-primary {
+        margin: auto !important;
+    }
+
+.form-group {
+    display: block;
+    float: inherit;
+    line-height: 30px;
+}
+
+.forgot-pass {
+    width: 100%;
+    direction: rtl;
+    float: left;
+    text-align: left;
+    margin-top: -10px;
+}
+
+.new_user {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.map-img {
+    width: 400px;
+    height: 300px;
+    display: inline-block;
+    float: right;
+}
+
+    .map-img img {
+        border: 3px solid #b1acb4;
+        border-radius: 5px;
+    }
+
+
+@media(min-width:768px) {
+    .navbar-static-side {
+        z-index: 1;
+        position: absolute;
+        float: right;
+        right: 0;
+        width: 250px;
+        top: 40px;
+    }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        margin-left: auto;
+    }
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    color: #fff !important;
+    direction: rtl;
+    float: right;
+    border-bottom: 1px solid #ededed;
+    height: 24px;
+}
+
+
+/*classis table*/
+
+.table-gray {
+    direction: rtl;
+    min-width: 100%;
+}
+
+    .table-gray tr {
+        border-bottom: 3px solid #fff;
+    }
+
+    .table-gray th {
+        height: 55px;
+        background-color: #777777;
+        color: #fff;
+        min-width: 130px;
+        padding: 5px 15px;
+        text-align: center;
+    }
+
+    .table-gray td {
+        height: 65px;
+        background-color: #f8f8f8;
+        min-width: 130px;
+        padding: 5px 15px;
+        text-align: center;
+    }
+
+        .table-gray td.td-links {
+            background: transparent;
+        }
+
+            .table-gray td.td-links a {
+                color: #8d268b;
+                font-weight: bold;
+                text-decoration: underline;
+            }
+            .table-gray td img{
+                width:60px;
+            }
+
+.form-template {
+    width:715px;
+    background: #fff;
+}
+
+    .form-template .header {
+       display: block;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        background-color: #777777;
+        font-weight: bold;
+        padding: 0 15px;
+        font-size: 18px;
+        margin-top: 0;
+    }
+    .form-template .form-group{
+        display: inline-block;
+        width: 140px;
+        margin:10px;
+    }
+    .form-template .form-group.lg{
+        width: 170px;
+    }
+   .form-template .form-group.sm{
+        width: 70px;
+    }
+    .form-template .form-group label{
+        display: block;
+        width: 100%;
+        height: 20px;
+    }
+    .form-template .form-group input[type="text"], .form-template .form-group select{
+        background: rgb(240, 238, 238);
+        border-radius: 0;
+        border:none;
+        height: 25px;
+        line-height: 25px;
+        width: 100%;
+
+    }
+    .form-template .form-group .butons_wrap{
+        display: block;
+       
+        margin-top:20px;
+
+    }
+    .form-template .buttons_wrap button{
+        background-color: #9e9b9b;
+        color: #fff;
+        float: left;
+        margin: 0 15px 0 0;
+        border: none;
+    }
+
+/*create profile page*/
+.msg-donor {
+    margin-top: 30px;
+    /*font-family: fontawesome;*/
+}
+
+    .msg-donor h5 {
+        font-weight: bold;
+    }
+
+.top-50 {
+    margin-top: 50px;
+}
+.bold{
+    font-weight:bold;
+}

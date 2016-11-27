@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "DonorHomePage";
+    Layout = "~/Views/Shared/_LoyoutDonor.cshtml";
+}
+
+
+    <!-- end navbar top -->
+    <!-- navbar side -->
+    
+    <!-- end navbar side -->
+    <!--  page-wrapper -->
+
+<div id="page-wrapper" style="right:20px">
+    <div>
+        <h3>שלום @ViewBag.name</h3>
+        <h4>תודה על תרומותיך לפניך התרומות שטרם נאספו על ידינו</h4>
+        <br />
+        <h4>באפשרותך לערוך ולבצע שינויים </h4>
+        <h4>וכל תרומה נוספת תתקבל בברכה!</h4>
+    </div>
+
+
+    <table class="table-gray">
+           <tr>
+            <th>קטגוריה</th>
+            <th>תת קטגוריה</th>
+            <th>סטטוס</th>
+            <th>תמונה</th>
+        
+    
+        </tr>
+        @foreach (var item in ViewBag.displayDonation)
+        {
+            <tr>
+                <td>@item.Category</td>
+                <td>@item.SubCategory</td>
+                <td>@item.StatusName</td>
+                <td><img src="@(item.PictureURL)" /></td>
+                <td><button id="btnSubmit" onclick="DoAction(@item.ID_Contribution , 1)">לפרטים ועריכה</button></td>
+                <td><button id="btnSubmit" onclick="DoAction(@item.ID_Contribution , 2)"> למחיקה</button></td>
+
+            </tr>
+        }
+    </table>
+   <a href="@Url.Action("AddingDonation", "AddingDonation")" class="btn btn-primary btn-block">הוספת תרומה </a> 
+</div>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function DoAction(c, type) {
+            var serviceURL = '';
+            if (type == 1)
+                serviceURL = '/AddingDonation/EditingDonation';
+            else
+                serviceURL = '/DonorHomePage/DeleteDonation';
+            $.ajax({
+                type: "POST",
+                dataType: "Json",
+                url: serviceURL,
+                data: { dd: c },
+                async: false,
+                success: function (data) {
+                    window.location = '@Url.Action("DonorHomePage", "DonorHomePage")';
+                    if (data == null || data.data == null) {
+                        ErrorMessage("", "err");
+                    } else {
+                        alert(result.Url);
+                        user = data[Object.keys(data)[0]];
+                        AddVereCode(user.ID);// anather Ajax call
+                        SuccessMessage("Done", "Successfully", "Done");
+                    }
+                },
+                error: function () {
+
+                    alert(data);
+                    ErrorMessage("", "error");
+                }
+            });
+
+
+        }
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            var msg = "@ViewBag.msg";
+            if (msg != null && msg != "")
+                alert(msg);
+
+        });
+    </script>
+
+
+    
+
+
+

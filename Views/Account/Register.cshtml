@@ -1,0 +1,150 @@
+﻿@model MeyadLeyaad1.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מיד ליעד</title>
+    <!-- Core CSS - Include with every page -->
+    <link href="~/plugins/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/plugins/pace/pace-theme-big-counter.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/main-style.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <div>
+        <img src="~/img/banner_body.png" alt="" />
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center logo-margin ">
+
+            </div>
+            @*<table>
+                @foreach (var item in ViewBag.displayDonation)
+                {
+                    <tr>
+                        <td>@item.Category</td>
+                        <td>@item.SubCategory</td>
+                        <td>@item.City</td>
+                        <td><img style="width:20px;" src="~/@(item.PictureURL)" /></td>
+
+                    </tr>
+                }
+            </table>*@
+            <div class="top-50">
+                <div class="text">
+                    <h1>עמותת מיד ליעד</h1>
+
+                    <p>
+                        מיד ליעד הוקם במטרה לסייע לאנשים מיעוטי יכולת לרהט את ביתם בכבוד וביעילות בחפצים שאתה וחברך כבר לא צריכים.<br>
+                        העמותה הוקמה בשנת 2005 ומאז נמסרו לנזקקים אלפי רהיטים ומכשירי חשמל, ציוד לתינוקות ופריטים נוספים.<br>
+                        מיד ליעד מוכר בכל אזור גוש דן והשרון ככתובת למסירת ריהוט, מוצרי חשמל, ציוד לתינוקות ועוד הנמסרים למשפחות אשר מצבן הכלכלי אינו מאפשר לקנותם חדשים.<br>
+                        מיד ליעד הינו ארגון התנדבותי הפועל ללא מטרות רווח, המפעיל קשת רחבה של מתנדבים המסייעים באיסוף, מיון וסידור המחסן, וחלוקת הציוד לבתי הנזקקים.<br>
+                        קשה לתאר את השמחה והאור שיכולים פריטים אלו להפיח בבית חשוך...
+                    </p>
+
+                    <p>
+                        לתרומות,צרו קשר דרך האתר<br>
+                        או בטלפון: 03-6198214
+                    </p>
+                </div>
+            </div>
+            <div class="map-img">
+                <img src="~/img/map.png" />
+            </div>
+
+
+            <div>
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">צור חשבון</h3>
+                    </div>
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                        {
+                            <form role="form">
+
+                                <div class="form-group">
+                                    <label>דואר אלקטרוני</label>
+                                    @Html.TextBoxFor(model => model.User_Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.User_Name)
+                                </div>
+
+                                <div class="form-group">
+                                    <label>סיסמה</label>
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+
+                                <div class="form-group">
+                                    <label>הזן סיסמה שוב </label >
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                </div>
+                   
+
+                                @Html.ValidationSummary(true)
+                                <button type="submit" class="btn btn-primary" style="float: right; display: block">שמור</button>
+                                <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
+
+                            </form>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="~/plugins/jquery-1.10.2.js"></script>
+    <script src="~/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="~/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        function DoAction(c) {
+            var serviceURL = '';
+            serviceURL = '/Account/remindPassword';
+
+            $.ajax({
+                type: "POST",
+                dataType: "Json",
+                url: serviceURL,
+                data: { dd: c },
+                async: false,
+                success: function (data) {
+                    alert(data);
+                    if (data == null || data.data == null) {
+                        ErrorMessage("", "err");
+                    } else {
+                        user = data[Object.keys(data)[0]];
+                        AddVereCode(user.ID);// anather Ajax call
+                        SuccessMessage("Done", "Successfully", "Done");
+                    }
+                },
+                error: function () {
+                    alert(data);
+                    ErrorMessage("", "error");
+                }
+            });
+
+        }
+    </script>
+
+</body>
+
+
+</html>

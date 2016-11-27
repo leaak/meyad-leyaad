@@ -1,0 +1,186 @@
+﻿@model Tuple<MeyadLeyaad1.Models.Donor, MeyadLeyaad1.Models.Schedule, MeyadLeyaad1.Models.Users>
+@{
+    ViewBag.Title = "CreateProfile";
+    Layout = ViewBag.layout;
+}
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פרופיל תורם</title>
+    <!-- Core CSS - Include with every page -->
+    <link href="~/plugins/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/plugins/pace/pace-theme-big-counter.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/main-style.css" rel="stylesheet" />
+
+</head>
+<body class="body-Login-back">
+
+    <div id="page-wrapper">
+
+        <div>
+            <p id="msgDonor" class="msg-donor" style="display:none">
+                <h5 class="bold">תורם יקר!</h5>
+                ע"מ שנוכל לטפל באיסוף התרומה בצורה יעילה ומהירה
+                <br />
+                אנא מלא את פרטי הטופס הבא:
+            </p>
+        </div>
+        <div class="row">
+            <div class="form-template">
+                <h1 class="header">פרופיל תורם</h1>
+                <!-- Form Elements -->
+                <div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                            {
+                            <form role="form">
+                                <div class="form-group" id="userName" style="display:none">
+                                    <label>שם משתמש</label>
+
+                                    @Html.TextBoxFor(model => model.Item3.User_Name)
+                                    @Html.ValidationMessageFor(model => model.Item3.User_Name)
+                                </div>
+                                <div class="form-group" id="psd" style="display:none">
+                                    <label>סיסמא</label>
+
+                                    @Html.TextBoxFor(model => model.Item3.Password)
+                                    @Html.ValidationMessageFor(model => model.Item3.Password)
+                                </div>
+
+                                <div class="form-group lg">
+                                    <label>שם פרטי</label>
+
+                                    @Html.TextBoxFor(model => model.Item1.First_Name)
+                                    @Html.ValidationMessageFor(model => model.Item1.First_Name)
+                                </div>
+                                <div class="form-group lg">
+                                    <label>שם משפחה</label>
+
+                                    @Html.TextBoxFor(model => model.Item1.Last_Name)
+                                    @Html.ValidationMessageFor(model => model.Item1.Last_Name)
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>טלפון נייד</label>
+
+                                    @Html.TextBoxFor(model => model.Item1.Phone)
+                                    @Html.ValidationMessageFor(model => model.Item1.Phone)
+                                </div>
+                                <div class="form-group">
+                                    <label>טלפון נוסף</label>
+                                    @Html.TextBoxFor(model => model.Item1.Phone)
+                                    @Html.ValidationMessageFor(model => model.Item1.Phone)
+                                </div>
+
+                                <div class="form-group lg">
+                                    <label>עיר</label>
+                                    @Html.TextBoxFor(model => model.Item1.City)
+                                    @Html.ValidationMessageFor(model => model.Item1.City)
+                                </div>
+                                <div class="form-group lg">
+                                    <label>רחוב</label>
+                                    @Html.TextBoxFor(model => model.Item1.Street)
+                                    @Html.ValidationMessageFor(model => model.Item1.Street)
+                                </div>
+
+                                <div class="form-group sm">
+                                    <label>בנין</label>
+                                    @Html.TextBoxFor(model => model.Item1.Building)
+                                    @Html.ValidationMessageFor(model => model.Item1.Building)
+                                </div>
+                                <div class="form-group sm">
+                                    <label>דירה</label>
+                                    @Html.TextBoxFor(model => model.Item1.House)
+                                    @Html.ValidationMessageFor(model => model.Item1.House)
+                                </div>
+                                <div class="form-group sm">
+                                    <label>קומה</label>
+                                    @Html.TextBoxFor(model => model.Item1.Floor)
+                                    @Html.ValidationMessageFor(model => model.Item1.Floor)
+                                </div>
+                                <div class="form-group lg">
+                                    <label>דואר אלקטרוני</label>
+
+                                    @Html.TextBoxFor(model => model.Item1.Email)
+                                    @Html.ValidationMessageFor(model => model.Item1.Email)
+                                </div>
+                                <div class="form-group lg">
+                                    <label>פקס</label>
+                                    @Html.TextBoxFor(model => model.Item1.Fax)
+                                    @Html.ValidationMessageFor(model => model.Item1.Fax)
+                                </div>
+                                <div class="form-group" style="width:100%; display:block">
+                                    <label>הערות</label>
+                                    @Html.TextBoxFor(model => model.Item1.Comments)
+                                    @Html.ValidationMessageFor(model => model.Item1.Comments)
+                                </div>
+                                <p>
+                                    זמני איסוף אפשריים: ימים א-ה בין השעות 8:00 עד 18:00
+
+                                    אנא בחר את הימים והשעות התאימים עבורך באופן כללי
+                                    <br />
+                                    כמובן ניצור איתך קשר ונתאם סופית
+                                </p>
+
+                                <div class="form-group" style="width:20%">
+                                    <label>בחר יום</label>
+                                    @Html.DropDownListFor(model => model.Item2.Day, new SelectList(new[]{"ראשון",
+"שני", "שלישי","רביעי"  , "חמישי"}))
+                                </div>
+                                <div class="form-group" style="width:20%">
+                                    <label>בחר שעת התחלה</label>
+                                    @Html.DropDownListFor(model => model.Item2.Start_Time, new SelectList(new[]{"08:00",
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00"}))
+                                </div>
+                                <div class="form-group" style="width:20%">
+                                    <label>בחר שעת סיום</label>
+                                    @Html.DropDownListFor(model => model.Item2.End_Time, new SelectList(new[]{
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00" , "20:00"}))
+                                </div>
+                                <div class="buttons_wrap">
+                                    <button type="submit">שמור</button>
+                                    <button type="reset">אפס שדות</button>
+                                </div>
+
+
+                            </form>
+                            }
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="~/plugins/jquery-1.10.2.js"></script>
+    <script src="~/plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="~/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script>
+        $(document).ready(function () {
+            var type = "@ViewBag.type";
+            if (type == "secretary") {
+                $("#userName").show();
+                $("#psd").show();
+                $('#page-wrapper').addClass('sec');
+            }
+            else
+                $("#msgDonor").show();
+
+        });
+    </script>
+
+</body>
+
+</html>
