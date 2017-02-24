@@ -10,25 +10,27 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Contribution">
           <Key>
             <PropertyRef Name="Id_Contribution" />
           </Key>
-          <Property Name="Id_Contribution" Type="int" Nullable="false" />
-          <Property Name="Id_Donor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Contribution" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Donor" Type="int" Nullable="false" />
           <Property Name="Category" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Sub_Category" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="text" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Modified_Status_Date" Type="date" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="years" Type="int" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id_Donor" />
           </Key>
+          <Property Name="Id_Donor" Type="int" Nullable="false" />
           <Property Name="First_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Last_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -50,6 +52,12 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Furnitures">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Picture">
           <Key>
@@ -89,8 +97,9 @@
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id_Donor" />
           </Key>
+          <Property Name="Id_Donor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="int" />
@@ -101,6 +110,7 @@
           <EntitySet Name="Contribution" EntityType="Self.Contribution" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Furnitures" EntityType="Self.Furnitures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
@@ -117,25 +127,27 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Contribution">
           <Key>
             <PropertyRef Name="Id_Contribution" />
           </Key>
-          <Property Name="Id_Contribution" Type="Int32" Nullable="false" />
-          <Property Name="Id_Donor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id_Contribution" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Donor" Type="Int32" Nullable="false" />
           <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Sub_Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Modified_Status_Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="years" Type="Int32" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id_Donor" />
           </Key>
+          <Property Name="Id_Donor" Type="Int32" Nullable="false" />
           <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -157,6 +169,12 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Furnitures">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Picture">
           <Key>
@@ -196,18 +214,20 @@
         </EntityType>
         <EntityType Name="Users">
           <Key>
-            <PropertyRef Name="Email" />
+            <PropertyRef Name="Id_Donor" />
           </Key>
+          <Property Name="Id_Donor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="Int32" />
           <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="Database1Entities8" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Database1Entities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Contribution" EntityType="Self.Contribution" />
           <EntitySet Name="Donor" EntityType="Self.Donor" />
           <EntitySet Name="Driver" EntityType="Self.Driver" />
+          <EntitySet Name="Furnitures" EntityType="Self.Furnitures" />
           <EntitySet Name="Picture" EntityType="Self.Picture" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" />
@@ -219,7 +239,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities8">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities2">
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Database1Model.Categories">
               <MappingFragment StoreEntitySet="Categories">
@@ -239,12 +259,14 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Modified_Status_Date" ColumnName="Modified_Status_Date" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="years" ColumnName="years" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Donor">
             <EntityTypeMapping TypeName="Database1Model.Donor">
               <MappingFragment StoreEntitySet="Donor">
+                <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
                 <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -267,6 +289,13 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Furnitures">
+            <EntityTypeMapping TypeName="Database1Model.Furnitures">
+              <MappingFragment StoreEntitySet="Furnitures">
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -310,6 +339,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Database1Model.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Type" ColumnName="Type" />

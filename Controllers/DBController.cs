@@ -12,15 +12,11 @@ namespace MeyadLeyaad1.Controllers
     public class DBController : Controller
     {
 
-        Database1Entities8 db = new Database1Entities8();
+        Database1Entities2 db = new Database1Entities2();
 
         //
         // GET: /DB/
 
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public void AddUser(RegisterModel model)
         {
@@ -47,7 +43,7 @@ namespace MeyadLeyaad1.Controllers
 
         public void EditDonor(Donor model)
         {
-            Donor d = getDonor(model.Email);
+            Donor d = getDonor(model.Id_Donor);
             d.Email = model.Email;d.First_Name = model.First_Name; d.Last_Name = model.Last_Name; d.Building = model.Building; d.City = model.City; d.Floor = model.Floor; d.House = model.House; d.Street = model.Street; d.Phone = model.Phone; d.Fax = model.Fax; d.Another_Phone = model.Another_Phone; d.Comments = model.Comments;
             db.SaveChanges();
         }
@@ -71,13 +67,20 @@ namespace MeyadLeyaad1.Controllers
         }
 
 
-        public int AddDonation(Contribution model , string id="")
+        public int AddDonation(Contribution model , string email)
         {
-            int id_contribution = getNextContributionId();
-            string email = id.Equals("") ? model.Id_Donor : id;
-            db.Contribution.Add(new Contribution { Id_Contribution = id_contribution, Id_Donor = email, Category = model.Category, Sub_Category = model.Sub_Category, Position = model.Position, Description = model.Description, Modified_Status_Date = DateTime.Now, Status = "3" });
+            int id = getIdByEmail(email);
+            int newID =  db.Contribution.Add(new Contribution { Id_Donor = id, Category = model.Category, Sub_Category = model.Sub_Category, Position = model.Position, Description = model.Description, Modified_Status_Date = DateTime.Now, Status = model.Status }).Id_Contribution;
             db.SaveChanges();
-            return id_contribution;
+            return newID;
+        }
+
+        public List<String> getStatuses()
+        {
+            List<String> _s = (from t in db.Statuses
+                               select t.Name).ToList();
+
+            return _s;
         }
 
         public List<String> getCategories()
@@ -175,10 +178,23 @@ namespace MeyadLeyaad1.Controllers
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
                 string url = p == null ? "" : "..\\" + p.Url;
-                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(c.Id_Donor) , getStatusName(c.Status));
+                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , getStatusName(c.Status));
                 dDonations.Add(d);
             }
             return dDonations;
+        }
+
+
+        public string getEmailById(int id)
+        {
+            var d = db.Donor.FirstOrDefault(c => (c.Id_Donor == id));
+            return d.Email;
+        }
+
+        public int getIdByEmail(string email)
+        {
+            var d = db.Donor.FirstOrDefault(c => (c.Email == email));
+            return d.Id_Donor;
         }
 
         public string getDonorName(string email)
@@ -207,8 +223,9 @@ namespace MeyadLeyaad1.Controllers
             return dDonations;
         }
         public List<DisplayDonation> getDonationsOfDonor(string email)
-          {
-            List <Contribution>donations= db.Contribution.Where(c => (c.Id_Donor == email)).ToList();
+        {
+            int id = getIdByEmail(email);
+            List <Contribution>donations= db.Contribution.Where(c => (c.Id_Donor == id)).ToList();
             List<DisplayDonation> dDonations = new List<DisplayDonation>();
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
@@ -224,9 +241,9 @@ namespace MeyadLeyaad1.Controllers
             return picture;
         }
 
-        public Donor getDonor(string idDonor)
+        public Donor getDonor(int idDonor)
         {
-            return db.Donor.FirstOrDefault(p => (p.Email == idDonor));
+            return db.Donor.FirstOrDefault(p => (p.Id_Donor == idDonor));
         }
 
         public Contribution getContribution(int id)
@@ -238,6 +255,42 @@ namespace MeyadLeyaad1.Controllers
         {
             return db.Contribution.Where(c => (c.Category == category && c.Sub_Category == subc && c.Position == position)).ToList();
         }
+
+      /*  public List<SubCategories> getSubCategoryByIdCotegory(int idCotegory)
+        {
+            return db.SubCategories.Where(m => (m.Id_Category == idCotegory)).ToList();
+        }
+        */
+        public List<string> getSubCategoryByIdCotegory(int idCotegory)
+        {
+            List<SubCategories> sc=  db.SubCategories.Where(m => (m.Id_Category == idCotegory)).ToList();   
+            List<string> subNames=new List<string>();
+            foreach(SubCategories item in sc)
+            {
+                   subNames.Add(item.Name);
+            }
+            return subNames;
+        }
+
+        public int getSubCategoryIdByCotegoryName(string categoryName)
+        {
+           return db.Categories.FirstOrDefault(m => (m.Name == categoryName)).Id;
+        }
+
+
+
+        
+
+ public List<Donor> searchDonors(Donor search)
+        {
+            return db.Donor.Where(d => (d.City == search.City)).ToList();
+        }
+
+        public List<Contribution> serachDontions(Contribution search)
+        {
+            return db.Contribution.Where(c => (/*c.Status == search.Status &&*/ c.Category == search.Category && c.Sub_Category == search.Sub_Category)).ToList();
+        }
+
 
     }
 }

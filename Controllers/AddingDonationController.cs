@@ -10,9 +10,10 @@ using System.Net;
 
 namespace MeyadLeyaad1.Controllers
 {
+    [Authorize]
     public class AddingDonationController : Controller
     {
-        //
+        
         // GET: /Adding_Donation/
         DBController db = new DBController();
        
@@ -68,13 +69,13 @@ namespace MeyadLeyaad1.Controllers
         public ActionResult AddingDonation([Bind(Prefix = "Item1")] Contribution cmodel, [Bind(Prefix = "Item2")] Picture pmodel, String returnUrl, HttpPostedFileBase file)
         {
 
-            if (ModelState.IsValid && (Session["type"].ToString().Equals("2") || db.isEmailExists(cmodel.Id_Donor)))
+            if (ModelState.IsValid && (Session["type"].ToString().Equals("2") || db.isEmailExists(db.getEmailById(cmodel.Id_Donor))))
             {
                 int idContribution = -1;
                 if(Session["type"].ToString().Equals("2"))
                     idContribution = db.AddDonation(cmodel, Session["email"].ToString());
                 else
-                    idContribution = db.AddDonation(cmodel);
+                    idContribution = db.AddDonation(cmodel, Session["email"].ToString());
                 
                     for (var i=0;i<Request.Files.Count;i++)
                     {
@@ -120,7 +121,7 @@ namespace MeyadLeyaad1.Controllers
         [AllowAnonymous]
         public ActionResult EditingDonation([Bind(Prefix = "Item1")] Contribution cmodel, [Bind(Prefix = "Item2")] Picture pmodel,  String returnUrl, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid && db.isEmailExists(cmodel.Id_Donor))
+            if (ModelState.IsValid && db.isEmailExists(db.getEmailById(cmodel.Id_Donor)))
             {
 
                 db.EditDonation(cmodel);

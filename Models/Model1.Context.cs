@@ -13,10 +13,10 @@ namespace MeyadLeyaad1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Database1Entities8 : DbContext
+    public partial class Database1Entities2 : DbContext
     {
-        public Database1Entities8()
-            : base("name=Database1Entities8")
+        public Database1Entities2()
+            : base("name=Database1Entities2")
         {
         }
     
@@ -29,6 +29,7 @@ namespace MeyadLeyaad1.Models
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Donor> Donor { get; set; }
         public DbSet<Driver> Driver { get; set; }
+        public DbSet<Furnitures> Furnitures { get; set; }
         public DbSet<Picture> Picture { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Statuses> Statuses { get; set; }

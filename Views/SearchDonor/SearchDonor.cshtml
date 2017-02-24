@@ -39,22 +39,24 @@
 
                                 <br />
                               
-                                <div class="form-group" style="width:8%;height:80px;background-image:url();border:1px solid black; padding:2px 2px 4px 4px">
-
-                                </div>
                                 <br />
-
-                                <table>
+                              
+                                   <table class="table-gray">
+                                              <tr>
+                                              <th>שם פרטי</th>
+                                              <th>שם משפחה</th>
+                                              <th>עיר</th>
+                                              <th>דוא"ל</th>
+                                    </tr>
                                     @foreach (var item in ViewBag.list)
                                     {
                                         <tr>
 
 
-                                            <td>@item.Category</td>
-                                            <td>@item.Sub_Category</td>
-                                            <td>@item.Position</td>
-                                            <td>@item.Description</td>
-                                            <td>@item.Modified_Status_Date</td>
+                                            <td>@item.First_Name</td>
+                                            <td>@item.Last_Name</td>
+                                            <td>@item.City</td>
+                                            <td>@item.Email</td>
                                             <td><a href="@Url.Action("EditingDonation", "AddingDonation" , item)"> לפרטים ועריכה</a></td>
 
 
@@ -78,34 +80,6 @@
     </div>
     
     
-    <div class="row">
-        <div class="col-lg-6">
-            <!--Basic Tabs   -->
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Basic Tabs
-                </div>
-                <div class="panel-body">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#Index" data-toggle="tab">Index</a>
-                        </li>
-                        <li>
-                            <a href="#profile" data-toggle="tab">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#messages" data-toggle="tab">Messages</a>
-                        </li>
-                        <li>
-                            <a href="#settings" data-toggle="tab">Settings</a>
-                        </li>
-                    </ul>
-
-                    
-                </div>
-            </div>
-            <!--End Basic Tabs   -->
-        </div>
-    </div>
+    
     <!--End Pill Tabs   -->
 </div>

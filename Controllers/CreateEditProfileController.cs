@@ -8,14 +8,16 @@ using MeyadLeyaad1.Controllers;
 
 namespace MeyadLeyaad1.Controllers
 {
-    public class CreateProfileController : Controller
+    [Authorize]
+    public class CreateEditProfileController : Controller
     {
-        //
+        
         // GET: /CreateProfile/
         DBController db = new DBController();
 
         public ActionResult CreateProfile()
         {
+            var tuple = new Tuple<Donor, Schedule , Users>(new Donor(), new Schedule() , new Users());
             ViewBag.UserName = Session["email"];
             if (Session["type"].ToString().Equals("1"))
             {
@@ -27,51 +29,52 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
-            return View();
+            return View("CreateEditProfile", tuple);
         }
 
-        public ActionResult EditProfile(Donor d)
+        public ActionResult EditProfile(int id)
         {
-            ViewBag.donor = d;
-            return View();
+
+            var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), new Schedule(), new Users());
+
+            ViewBag.UserName = Session["email"];
+            if (Session["type"].ToString().Equals("1"))
+            {
+                ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
+                ViewBag.type = "secretary";
+            }
+            else
+            {
+                ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
+                ViewBag.type = "donor";
+            }
+            ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
+            return View("CreateEditProfile", tuple);
         }
 
-        public ActionResult EditProfile()
-        {
-            ViewBag.donor = db.getDonor(Session["email"].ToString());
-            return View();
-        }
+       
 
         [HttpPost]
-        [AllowAnonymous]
-        public ActionResult CreateProfile([Bind(Prefix = "Item1")] Donor dmodel, [Bind(Prefix = "Item2")] Schedule smodel, String returnUrl)
+        public ActionResult CreateEditProfile([Bind(Prefix = "Item1")] Donor dmodel, [Bind(Prefix = "Item2")] Schedule smodel, String returnUrl)
         {
             if (ModelState.IsValid)
             {
-
-                // Insert a new user into the database
-
-
-                // Donor user = db.Donor.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
-                // Check if user already exists
-                // if (user == null)
-                //{
-                // Insert name into the profile table
-                // db.Donor.Add(new Donor { Email = model.Email, First_Name = model.First_Name, Last_Name = model.Last_Name, Building = model.Building, City = model.City, Floor = model.Floor, House = model.House, Street = model.Street, Phone = model.Phone , Fax = model.Fax , Another_Phone = model.Another_Phone , Comments = model.Comments  , Password = model.Password});
-                //db.Donor.Add(new Donor { Email = "model.Email", First_Name = "model.First_Name", Last_Name = "model.Last_Name", Building = 45, City = "model.City", Floor = 9, House = 12, Street = "model.Street", Phone = "model.Phone", Fax = "model.Fax", Another_Phone = "model.Another_Phone", Comments = "model.Comments" });
-
-
-                // OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
-                // OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);
-
-                if (Session["type"].ToString().Equals("1")  || db.isEmailExists(dmodel.Email))
+                if(dmodel.Id_Donor<=0)
                 {
-                    db.AddDonor(dmodel);
+                    if (Session["type"].ToString().Equals("1") || db.isEmailExists(dmodel.Email))
+                    {
+                        db.AddDonor(dmodel);
 
-                    return RedirectToLocal(returnUrl);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                        ModelState.AddModelError("", "כתובת דואר אלקטרוני אינה מוכרת");
                 }
                 else
-                    ModelState.AddModelError("", "כתובת דואר אלקטרוני אינה מוכרת");
+                {
+                    db.EditDonor(dmodel);
+                }
+                
                 //}
 
 
@@ -83,7 +86,7 @@ namespace MeyadLeyaad1.Controllers
                     // WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     //WebSecurity.Login(model.UserName, model.Password);
 
-                    return RedirectToAction("CreateProfile", "CreateProfile");
+                    return RedirectToLocal(returnUrl);
                 }
                 catch (Exception e)
                 {

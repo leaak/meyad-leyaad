@@ -7,10 +7,11 @@ using MeyadLeyaad1.Models;
 
 namespace MeyadLeyaad1.Controllers
 {
+    [Authorize]
     public class IndexController : Controller
     {
         DBController db = new DBController();
-        //
+        
         // GET: /Index/
 
         public ActionResult Index()

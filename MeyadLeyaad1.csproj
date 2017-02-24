@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -61,9 +65,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -131,7 +132,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddingDonationController.cs" />
     <Compile Include="Controllers\AllDonorsController.cs" />
-    <Compile Include="Controllers\CreateProfileController.cs" />
+    <Compile Include="Controllers\CreateEditDonationController.cs" />
+    <Compile Include="Controllers\CreateEditProfileController.cs" />
     <Compile Include="Controllers\DBController.cs" />
     <Compile Include="Controllers\DonorHomePageController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -147,13 +149,16 @@
     <Compile Include="Models\Contribution.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DisplayDonation.cs" />
     <Compile Include="Models\Donor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Driver.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DisplayDonation.cs" />
+    <Compile Include="Models\Furnitures.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -261,6 +266,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="packages.config" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -316,7 +322,9 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -335,11 +343,12 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_LoyoutDonor.cshtml" />
-    <Content Include="Views\CreateProfile\CreateProfile.cshtml" />
+    <Content Include="Views\CreateEditProfile\CreateEditProfile.cshtml" />
     <Content Include="Views\AddingDonation\EditingDonation.cshtml" />
-    <Content Include="Views\CreateProfile\EditProfile.cshtml" />
+    <Content Include="Views\CreateEditProfile\EditProfile.cshtml" />
     <Content Include="Views\AllDonors\AllDonors.cshtml" />
     <Content Include="Views\DonorHomePage\DonorHomePage.cshtml" />
+    <Content Include="Views\CreateEditDonation\CreateEditDonation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DonationImages\" />

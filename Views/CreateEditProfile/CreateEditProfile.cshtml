@@ -38,9 +38,14 @@
                 <div>
                     <div class="row">
                         <div class="col-lg-6">
-                            @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                            @using (Html.BeginForm("CreateEditProfile", "CreateEditProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                             <form role="form">
+                                 <div class="form-group" style="width:100%; display:none">
+                        <label>מספר מזהה</label>
+                        <br />
+                        @Html.HiddenFor(model => model.Item1.Id_Donor)
+                    </div>
                                 <div class="form-group" id="userName" style="display:none">
                                     <label>שם משתמש</label>
 
