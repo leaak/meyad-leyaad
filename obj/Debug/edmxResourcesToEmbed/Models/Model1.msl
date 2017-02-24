@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities8">
+  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities2">
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="Database1Model.Categories">
         <MappingFragment StoreEntitySet="Categories">
@@ -20,12 +20,14 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Modified_Status_Date" ColumnName="Modified_Status_Date" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="years" ColumnName="years" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Donor">
       <EntityTypeMapping TypeName="Database1Model.Donor">
         <MappingFragment StoreEntitySet="Donor">
+          <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
           <ScalarProperty Name="First_Name" ColumnName="First_Name" />
           <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
           <ScalarProperty Name="City" ColumnName="City" />
@@ -48,6 +50,13 @@
           <ScalarProperty Name="City" ColumnName="City" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Furnitures">
+      <EntityTypeMapping TypeName="Database1Model.Furnitures">
+        <MappingFragment StoreEntitySet="Furnitures">
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -91,6 +100,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="Database1Model.Users">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Type" ColumnName="Type" />

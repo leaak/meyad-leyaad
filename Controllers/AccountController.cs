@@ -12,7 +12,7 @@ using System.Net;
 
 namespace MeyadLeyyad1.Controllers
 {
-    [Authorize]
+    
     public class AccountController : Controller
     {
         //
@@ -23,7 +23,7 @@ namespace MeyadLeyyad1.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.displayDonation = db.getLatestDonations();
+            //ViewBag.displayDonation = db.getLatestDonations();
             return View();
         }
 
@@ -36,6 +36,7 @@ namespace MeyadLeyyad1.Controllers
         {
             if (ModelState.IsValid && db.isUserExists(model.User_Name , model.Password))
             {
+                FormsAuthentication.SetAuthCookie(model.User_Name, false);
                 System.Web.HttpContext.Current.Session["email"] = model.User_Name;
                 System.Web.HttpContext.Current.Session["password"] = model.Password;
                 int type = db.getUserType(model.User_Name, model.Password);
@@ -48,7 +49,7 @@ namespace MeyadLeyyad1.Controllers
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "שם משתמש או סיסמה שגויה");
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.displayDonation = db.getLatestDonations();
+           // ViewBag.displayDonation = db.getLatestDonations();
             return View();
         }
         
@@ -97,6 +98,7 @@ namespace MeyadLeyyad1.Controllers
         public ActionResult LogOff()
         {
           //  WebSecurity.Logout();
+            FormsAuthentication.SignOut();
 
             return RedirectToAction("Account", "Login");
         }
