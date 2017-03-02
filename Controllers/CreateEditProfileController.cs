@@ -8,7 +8,7 @@ using MeyadLeyaad1.Controllers;
 
 namespace MeyadLeyaad1.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class CreateEditProfileController : Controller
     {
         
@@ -19,16 +19,16 @@ namespace MeyadLeyaad1.Controllers
         {
             var tuple = new Tuple<Donor, Schedule , Users>(new Donor(), new Schedule() , new Users());
             ViewBag.UserName = Session["email"];
-            if (Session["type"].ToString().Equals("1"))
+           /* if (Session["type"].ToString().Equals("1"))
             {
                 ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
                 ViewBag.type = "secretary";
             }
             else
-            {
+            {*/
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
-            }
+            //}
             return View("CreateEditProfile", tuple);
         }
 
@@ -55,7 +55,7 @@ namespace MeyadLeyaad1.Controllers
        
 
         [HttpPost]
-        public ActionResult CreateEditProfile([Bind(Prefix = "Item1")] Donor dmodel, [Bind(Prefix = "Item2")] Schedule smodel, String returnUrl)
+        public ActionResult CreateEditProfile([Bind(Prefix = "Item1")] Donor dmodel, [Bind(Prefix = "Item2")] Schedule smodel, [Bind(Prefix = "Item3")] Users umodel, String returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -63,8 +63,7 @@ namespace MeyadLeyaad1.Controllers
                 {
                     if (Session["type"].ToString().Equals("1") || db.isEmailExists(dmodel.Email))
                     {
-                        db.AddDonor(dmodel);
-
+                        db.AddDonor(dmodel , smodel);
                         return RedirectToLocal(returnUrl);
                     }
                     else

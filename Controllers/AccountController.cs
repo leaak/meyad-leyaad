@@ -196,7 +196,7 @@ namespace MeyadLeyyad1.Controllers
                 else
                 {
                     if (newUser)
-                        return RedirectToAction("CreateProfile", "CreateProfile");
+                        return RedirectToAction("CreateProfile", "CreateEditProfile");
                     else
                         return RedirectToAction("DonorHomePage", "DonorHomePage");
                 }
