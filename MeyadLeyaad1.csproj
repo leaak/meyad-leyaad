@@ -134,11 +134,15 @@
     <Compile Include="Controllers\AllDonorsController.cs" />
     <Compile Include="Controllers\CreateEditDonationController.cs" />
     <Compile Include="Controllers\CreateEditProfileController.cs" />
-    <Compile Include="Controllers\DBController.cs" />
+    <Compile Include="Controllers\DBController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\DonorHomePageController.cs" />
+    <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\SearchDonationController.cs" />
     <Compile Include="Controllers\SearchDonorController.cs" />
+    <Compile Include="Controllers\testDB.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -307,11 +311,14 @@
     <Content Include="plugins\pace\pace.js" />
     <Content Include="plugins\social-buttons\social-buttons.css" />
     <Content Include="plugins\timeline\timeline.css" />
+    <Content Include="Scripts\googlemap.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.tablednd.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -349,6 +356,8 @@
     <Content Include="Views\AllDonors\AllDonors.cshtml" />
     <Content Include="Views\DonorHomePage\DonorHomePage.cshtml" />
     <Content Include="Views\CreateEditDonation\CreateEditDonation.cshtml" />
+    <Content Include="Views\Driver.cshtml" />
+    <Content Include="Views\Driver\Driver.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DonationImages\" />

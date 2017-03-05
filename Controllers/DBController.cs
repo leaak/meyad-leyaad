@@ -121,6 +121,7 @@ namespace MeyadLeyaad1.Controllers
         public int getNextContributionId()
         {
             int count = db.Contribution.Count();
+
             return count + 1;
         }
 
@@ -222,6 +223,14 @@ namespace MeyadLeyaad1.Controllers
             }
             return dDonations;
         }
+
+        public List<string> getAllCities()
+        {
+
+            return  db.Donor.Select(s=>s.City).Distinct().ToList();
+              
+        }
+
         public List<DisplayDonation> getDonationsOfDonor(string email)
         {
             int id = getIdByEmail(email);
@@ -281,7 +290,7 @@ namespace MeyadLeyaad1.Controllers
 
         
 
- public List<Donor> searchDonors(Donor search)
+        public List<Donor> searchDonors(Donor search)
         {
             return db.Donor.Where(d => (d.City == search.City)).ToList();
         }
@@ -291,6 +300,77 @@ namespace MeyadLeyaad1.Controllers
             return db.Contribution.Where(c => (/*c.Status == search.Status &&*/ c.Category == search.Category && c.Sub_Category == search.Sub_Category)).ToList();
         }
 
+        //calculate the route - help functions
+        public List<Contribution> getContributionByStatus(string status)
+        {
+            return db.Contribution.Where(c => (c.Status == status)).ToList();
+       
+        }
 
+        public Donor getDonorOfDonation(int /*string*/contributionId)
+        {
+            int idDonor;
+            idDonor = db.Contribution.FirstOrDefault(c => (c.Id_Contribution == contributionId)).Id_Donor;
+            return db.Donor.FirstOrDefault(d => (d.Id_Donor == idDonor));
+        }
+
+        public List<string> getAddressOfDonor(int idDonor)
+        {
+            Donor donor= db.Donor.FirstOrDefault(d => (d.Id_Donor == idDonor));
+            List<string> address = new List<string>();
+            address.Add(donor.City);
+            address.Add(donor.Street);
+            address.Add(donor.Building.ToString());
+            address.Add(donor.House.ToString());
+            address.Add(donor.Floor.ToString());
+
+            return address;
+        }
+        //implement
+        public List<Contribution> getDonationByDay(string day)
+        {
+
+            List<Contribution> donationPerDay =
+            (from c in db.Contribution 
+            join s in db.Schedule on c.Id_Donor equals s.Id_User 
+            where s.Day == day
+            select c).ToList();
+      
+            return donationPerDay;
+        }
+        
+        public Dictionary<string,Dictionary<string,List<Contribution>>> getDonationByDayAndCity(string day)
+        {
+            
+            Dictionary<string, List<Contribution>> dictContributionInCity = new Dictionary<string,List<Contribution>>();
+            Dictionary<string,Dictionary<string,List<Contribution>>> dictDayAndCityDonation = new Dictionary<string,Dictionary<string,List<Contribution>>>();
+            //get all the contribution from specific day,
+            List<Contribution> donationPerDay=getDonationByDay(day);
+            //dictDayAndCityDonation[day]
+            //sort by city
+            List<Contribution> con=new List<Contribution>();
+            List<string> cities = getAllCities();
+            Donor donor;
+            foreach(var city in cities)
+            {
+                dictContributionInCity[city] = con;
+                foreach (var donation in donationPerDay)
+                {
+                    donor = db.Donor.FirstOrDefault(d => (d.Id_Donor == donation.Id_Donor));
+                    if (donor.City == city)
+                        dictContributionInCity[city].Add(donation);
+                }
+            }
+
+            dictDayAndCityDonation[day] = dictContributionInCity;
+            return dictDayAndCityDonation;
+          
+        }
+
+
+        //public List<Contribution> getDonationByCityAndDay(List<Contribution> c, string city, string day )
+        //{
+
+        //}
     }
 }
