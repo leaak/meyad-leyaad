@@ -35,9 +35,10 @@ namespace MeyadLeyaad1.Controllers
             return db.Users.Any(u => u.Email == Email);
         }
 
-        public void AddDonor(Donor model)
+        public void AddDonor(Donor dmodel, Schedule smodel)
         {
-            db.Donor.Add(new Donor { Email = model.Email, First_Name = model.First_Name, Last_Name = model.Last_Name, Building = model.Building, City = model.City, Floor = model.Floor, House = model.House, Street = model.Street, Phone = model.Phone, Fax = model.Fax, Another_Phone = model.Another_Phone, Comments = model.Comments });
+            int id = db.Donor.Add(new Donor { Email = dmodel.Email, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments }).Id_Donor;
+            db.Schedule.Add(new Schedule { Day = smodel.Day, Id_User = id, End_Time = smodel.End_Time, Start_Time = smodel.Start_Time });
             db.SaveChanges();
         }
 

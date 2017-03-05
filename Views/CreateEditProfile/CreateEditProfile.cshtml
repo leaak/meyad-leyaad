@@ -150,6 +150,37 @@
                                     @Html.DropDownListFor(model => model.Item2.End_Time, new SelectList(new[]{
 "09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00" , "20:00"}))
                                 </div>
+
+                                  <script type="text/javascript">
+                                      function show(elementId) {
+                                          document.getElementById(elementId).style.display = "block";
+                                      }
+                    </script>
+
+
+                    <button type="button" onclick="show('another_day');">הוסף יום</button>
+                    <div id="another_day" style="display:none">
+
+                                  <div class="form-group" style="width:20%">
+                                    <label>בחר יום</label>
+                                    @Html.DropDownListFor(model => model.Item2.Day, new SelectList(new[]{"ראשון",
+"שני", "שלישי","רביעי"  , "חמישי"}))
+                                </div>
+                          <div class="form-group" style="width:20%">
+                                    <label>בחר שעת התחלה</label>
+                                    @Html.DropDownListFor(model => model.Item2.Start_Time, new SelectList(new[]{"08:00",
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00"}))
+                                </div>
+                                <div class="form-group" style="width:20%">
+                                    <label>בחר שעת סיום</label>
+                                    @Html.DropDownListFor(model => model.Item2.End_Time, new SelectList(new[]{
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00" , "20:00"}))
+                                </div>
+
+                       
+                    </div>
+
+
                                 <div class="buttons_wrap">
                                     <button type="submit">שמור</button>
                                     <button type="reset">אפס שדות</button>
