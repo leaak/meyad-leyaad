@@ -21,7 +21,6 @@ namespace MeyadLeyaad1.Controllers
         public ActionResult AddingDonation()
         {
             var tuple = new Tuple<Contribution, Picture>(new Contribution(), new Picture());
-            
             var exemploList = new SelectList(db.getCategories());
             //var subList = new SelectList(db.getSubCategories());
             ViewBag.ExemploList = exemploList;

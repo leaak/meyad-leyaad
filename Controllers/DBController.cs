@@ -330,48 +330,72 @@ namespace MeyadLeyaad1.Controllers
         //implement
         public List<Contribution> getDonationByDay(string day)
         {
+            List<Contribution> donationPerDay = (from c in db.Contribution
+                                                join s in db.Schedule
+                                                on c.Id_Donor equals s.Id_User
+                                                where s.Day == day
+                                                select c).ToList();
 
-            List<Contribution> donationPerDay =
-            (from c in db.Contribution 
-            join s in db.Schedule on c.Id_Donor equals s.Id_User 
-            where s.Day == day
-            select c).ToList();
+            //List<Contribution> donationPerDay =
+            //(from c in db.Contribution 
+            //join s in db.Schedule on c.Id_Donor equals s.Id_User 
+            //where s.Day == day
+            //select c).ToList();
       
             return donationPerDay;
         }
-        
-        public Dictionary<string,Dictionary<string,List<Contribution>>> getDonationByDayAndCity(string day)
-        {
-            
-            Dictionary<string, List<Contribution>> dictContributionInCity = new Dictionary<string,List<Contribution>>();
-            Dictionary<string,Dictionary<string,List<Contribution>>> dictDayAndCityDonation = new Dictionary<string,Dictionary<string,List<Contribution>>>();
-            //get all the contribution from specific day,
-            List<Contribution> donationPerDay=getDonationByDay(day);
-            //dictDayAndCityDonation[day]
-            //sort by city
-            List<Contribution> con=new List<Contribution>();
-            List<string> cities = getAllCities();
-            Donor donor;
-            foreach(var city in cities)
-            {
-                dictContributionInCity[city] = con;
-                foreach (var donation in donationPerDay)
-                {
-                    donor = db.Donor.FirstOrDefault(d => (d.Id_Donor == donation.Id_Donor));
-                    if (donor.City == city)
-                        dictContributionInCity[city].Add(donation);
-                }
-            }
 
-            dictDayAndCityDonation[day] = dictContributionInCity;
-            return dictDayAndCityDonation;
-          
+        public Schedule getSchedulfordonor(int idDonor)
+        {
+
+            
+            Schedule schedule = db.Schedule.FirstOrDefault(s => s.Id_User == idDonor);
+            return schedule;
+
         }
+      
+
+        //public Dictionary<string, Dictionary<string, List<Contribution>>> getDonationByDayAndCity(string day)
+        //{
+
+        //    Dictionary<string, List<Contribution>> dictContributionInCity = new Dictionary<string, List<Contribution>>();
+        //    Dictionary<string, Dictionary<string, List<Contribution>>> dictDayAndCityDonation = new Dictionary<string, Dictionary<string, List<Contribution>>>();
+        //    //get all the contribution from specific day,
+        //    List<Contribution> donationPerDay = getDonationByDay(day);
+        //    //dictDayAndCityDonation[day]
+        //    //sort by city
+        //    List<Contribution> con = new List<Contribution>();
+        //    List<string> cities = getAllCities();
+        //    Donor donor;
+        //    foreach (var city in cities)
+        //    {
+        //        dictContributionInCity[city] = con;
+        //        foreach (var donation in donationPerDay)
+        //        {
+        //            donor = db.Donor.FirstOrDefault(d => (d.Id_Donor == donation.Id_Donor));
+        //            if (donor.City == city)
+        //                dictContributionInCity[city].Add(donation);
+        //        }
+        //    }
+
+        //    dictDayAndCityDonation[day] = dictContributionInCity;
+        //    return dictDayAndCityDonation;
+
+        //}
+
+
 
 
         //public List<Contribution> getDonationByCityAndDay(List<Contribution> c, string city, string day )
         //{
 
         //}
+        public Donor getDonorByContribution(int idDonor)
+        {
+            Donor donor = db.Donor.FirstOrDefault(d => (d.Id_Donor == idDonor));
+            return donor;
+        }
+                    
+        
     }
 }

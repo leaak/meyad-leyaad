@@ -140,6 +140,7 @@
     <Compile Include="Controllers\DonorHomePageController.cs" />
     <Compile Include="Controllers\DriverController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\SchedulerController.cs" />
     <Compile Include="Controllers\SearchDonationController.cs" />
     <Compile Include="Controllers\SearchDonorController.cs" />
     <Compile Include="Controllers\testDB.cs" />
@@ -358,6 +359,7 @@
     <Content Include="Views\CreateEditDonation\CreateEditDonation.cshtml" />
     <Content Include="Views\Driver.cshtml" />
     <Content Include="Views\Driver\Driver.cshtml" />
+    <Content Include="Views\Scheduler\Scheduler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DonationImages\" />
