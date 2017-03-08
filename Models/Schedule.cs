@@ -18,6 +18,6 @@ namespace MeyadLeyaad1.Models
         public string Start_Time { get; set; }
         public string End_Time { get; set; }
         public int Id_User { get; set; }
-        public bool User_Type { get; set; }
+        public Nullable<bool> User_Type { get; set; }
     }
 }

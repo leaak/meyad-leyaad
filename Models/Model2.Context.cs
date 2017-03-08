@@ -13,10 +13,10 @@ namespace MeyadLeyaad1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Database1Entities3 : DbContext
+    public partial class Database1Entities4 : DbContext
     {
-        public Database1Entities3()
-            : base("name=Database1Entities3")
+        public Database1Entities4()
+            : base("name=Database1Entities4")
         {
         }
     

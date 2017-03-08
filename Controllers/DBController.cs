@@ -12,7 +12,7 @@ namespace MeyadLeyaad1.Controllers
     public class DBController : Controller
     {
 
-        Database1Entities2 db = new Database1Entities2();
+        Database1Entities4 db = new Database1Entities4();
 
         //
         // GET: /DB/
@@ -345,12 +345,10 @@ namespace MeyadLeyaad1.Controllers
             return donationPerDay;
         }
 
-        public Schedule getSchedulfordonor(int idDonor)
+        public List<Schedule> getSchedulfordonor(int idDonor)
         {
-
-            
-            Schedule schedule = db.Schedule.FirstOrDefault(s => s.Id_User == idDonor);
-            return schedule;
+                      
+              return db.Schedule.Where(s => (s.Id_User == idDonor)).ToList();           
 
         }
       

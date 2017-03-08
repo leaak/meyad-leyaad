@@ -7,6 +7,8 @@ using MeyadLeyaad1.Models;
 using System.IO;
 using System.Net.Mail;
 using System.Net;
+//using System.Net.Http;
+//using System.Web.Http;
 
 namespace MeyadLeyaad1.Controllers
 {
@@ -16,12 +18,22 @@ namespace MeyadLeyaad1.Controllers
         // GET: /Scheduler/
 
         DBController db = new DBController();
+        [HttpPost]
+
+        public ActionResult Scheduler(String day = "")
+        {
+            List<Dictionary<string, string>> lst = new List<Dictionary<string,string>>();
+            if(day != null && !day.Equals(""))
+                lst = getDonationByDayAndCity(day);
+            ViewBag.dict = lst;
+            return View();
+        }
+
 
         public ActionResult Scheduler()
         {
-            string day = "monday";
-            List<Dictionary<string, string>> lst = getDonationByDayAndCity("Monday");
-            ViewBag.dict(lst);
+            List<Dictionary<string, string>> lst = new List<Dictionary<string, string>>();
+            ViewBag.dict = lst;
             return View();
         }
 
@@ -42,13 +54,19 @@ namespace MeyadLeyaad1.Controllers
                 string address = donor.Street + ' ' + donor.Building + '/' + donor.House+" קומה "+ donor.Floor;
                 string donorName = donor.First_Name + ' ' + donor.Last_Name;
                 string donorPhone = donor.Phone;
-                Schedule s = db.getSchedulfordonor(donor.Id_Donor);
-                details["בין השעות"] = s.Start_Time + " ל " + s.End_Time;
-                details["שם התורם"] = donorName;
-                details["טלפון"] = donorPhone;
-                details["כתובת"] = address;
-                details["עיר"] = donor.City;
-                details["המוצר"] = donation.Sub_Category;
+
+                foreach (Schedule s in db.getSchedulfordonor(donor.Id_Donor))
+                {
+                    details = new Dictionary<string, string>();
+                    details["בין השעות"] = s.Start_Time + " ל " + s.End_Time;
+                    details["שם התורם"] = donorName;
+                    details["טלפון"] = donorPhone;
+                    details["כתובת"] = address;
+                    details["עיר"] = donor.City;
+                    details["המוצר"] = donation.Sub_Category;
+                    details["מזהה"] = ""+donation.Id_Contribution;
+                   
+                }
                 dictContributionInCity.Add(details);
             }
             return dictContributionInCity;

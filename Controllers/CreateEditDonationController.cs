@@ -79,7 +79,7 @@ namespace MeyadLeyaad1.Controllers
                         if (newFile != null && newFile.ContentLength > 0)
                         {
                             int idPicture = db.getNextPictureId();
-                            ; var fileName = Path.GetFileName(newFile.FileName);
+                            var fileName = Path.GetFileName(newFile.FileName);
                             var path = Path.Combine(Server.MapPath("~/DonationImages/"), idContribution + "_" + idPicture + ".jpg");
 
                             newFile.SaveAs(path);
