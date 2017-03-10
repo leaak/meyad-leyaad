@@ -10,6 +10,6 @@ namespace MeyadLeyaad1.Controllers
     public class testDB
     {
         DBController db = new DBController();
-       // List<Contribution>c= db.getDonationByDay('Monday');
+        List<Contribution>c= db.getDonationByDay('Monday');
     }
 }
