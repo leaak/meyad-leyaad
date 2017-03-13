@@ -135,7 +135,7 @@
                         לא לקחת מוצר שאינו עומד בקריטריונים.
                     </p>
                     <div class="buttons_wrap">
-                        <button type="submit">שמור</button>
+                        <button type="submit">הוסף</button>
                         <button type="reset">אפס שדות</button>
                     </div>
 
@@ -182,6 +182,7 @@
 
             success: function (json) {
                 //alert("success" + json);
+                    $('#ddlSubCategory')=''
                     $.each(json, function(i, value) {
                         $('#ddlSubCategory').append($('<option>').text(value).attr('value', value));
                     });
