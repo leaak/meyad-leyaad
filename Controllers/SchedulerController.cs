@@ -18,7 +18,7 @@ namespace MeyadLeyaad1.Controllers
         // GET: /Scheduler/
 
         DBController db = new DBController();
-        [HttpPost]
+       // [HttpPost]
 
         public ActionResult Scheduler(String day = "")
         {
@@ -28,14 +28,14 @@ namespace MeyadLeyaad1.Controllers
             ViewBag.dict = lst;
             return View();
         }
+        
 
-
-        public ActionResult Scheduler()
+/*        public ActionResult Scheduler()
         {
             List<Dictionary<string, string>> lst = new List<Dictionary<string, string>>();
             ViewBag.dict = lst;
             return View();
-        }
+        }*/
 
         public List<Dictionary<string,string>> getDonationByDayAndCity(string day)
         {
@@ -65,7 +65,6 @@ namespace MeyadLeyaad1.Controllers
                     details["עיר"] = donor.City;
                     details["המוצר"] = donation.Sub_Category;
                     details["מזהה"] = ""+donation.Id_Contribution;
-                   
                 }
                 dictContributionInCity.Add(details);
             }

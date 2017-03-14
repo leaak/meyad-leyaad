@@ -34,12 +34,13 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
+            ViewBag.subject = "הוספת תרומה";
             return View("CreateEditDonation", tuple);
         }
 
         public ActionResult EditDonation(int id)
         {
-            var tuple = new Tuple<Contribution, Picture>(db.getContribution(id), new Picture());
+            var tuple = new Tuple<Contribution, Picture>(db.getContribution(id), db.getPicture(id));
             //var subList = new SelectList(db.getSubCategories());
             ViewBag.Categories = new SelectList(db.getCategories());
             ViewBag.Statuses = new SelectList(db.getStatuses()); 
@@ -53,6 +54,7 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
+            ViewBag.subject = "עריכת תרומה";
             return View("CreateEditDonation", tuple);
         }
 
@@ -62,7 +64,7 @@ namespace MeyadLeyaad1.Controllers
             //ViewBag.subCategories = db.getSubCategoryByIdCotegory(id);
 
 
-            if (ModelState.IsValid && (Session["type"].ToString().Equals("2") || db.isEmailExists(db.getEmailById(cmodel.Id_Donor))))
+            if (ModelState.IsValid /*&& (Session["type"].ToString().Equals("2") || db.isEmailExists(db.getEmailById(cmodel.Id_Donor)))*/)
             {
                 int idContribution = -1;
 
@@ -99,7 +101,7 @@ namespace MeyadLeyaad1.Controllers
                 return RedirectToLocal(returnUrl);
 
             }
-            return View(cmodel);
+            return View(new Tuple<Contribution, Picture>(cmodel , pmodel));
 
         }
 

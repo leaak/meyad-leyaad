@@ -32,9 +32,10 @@ namespace MeyadLeyaad1.Controllers
             return View("CreateEditProfile", tuple);
         }
 
-        public ActionResult EditProfile(int id)
+        public ActionResult EditProfile(int id = -1)
         {
-
+            if (id == -1)
+                id = db.getUserId(Session["email"].ToString(), Session["password"].ToString());
             var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), new Schedule(), new Users());
 
             ViewBag.UserName = Session["email"];

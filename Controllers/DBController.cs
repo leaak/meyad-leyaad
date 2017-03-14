@@ -52,7 +52,9 @@ namespace MeyadLeyaad1.Controllers
         public void EditDonation(Contribution c)
         {
             Contribution origin = getContribution(c.Id_Contribution);
-            c.Modified_Status_Date = DateTime.Now; c.Status = "3";//TODO: change
+            c.Modified_Status_Date = DateTime.Now;
+            if (c.Status == null)
+                c.Status = "לפני סינון";
             db.Entry(origin).CurrentValues.SetValues(c);
             db.SaveChanges();
         }
@@ -136,6 +138,16 @@ namespace MeyadLeyaad1.Controllers
 
         }
 
+        public int getUserId(String email, String password)
+        {
+            var type = db.Users.Where(u => (u.Email == email && u.Password == password)).Select(u => u.Id_Donor);
+            // return type.FirstOrDefault();
+            return Convert.ToInt32(type.FirstOrDefault());
+
+            // int t = (from u in db.Users where u.User_Name == userName && u.Password == password select u.Type);
+
+        }
+
         public string getUserPassword(String email)
         {
             return db.Users.Where(u => (u.Email == email)).Select(u => u.Password).ToString();
@@ -180,7 +192,7 @@ namespace MeyadLeyaad1.Controllers
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
                 string url = p == null ? "" : "..\\" + p.Url;
-                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , getStatusName(c.Status));
+                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , c.Status);
                 dDonations.Add(d);
             }
             return dDonations;
@@ -240,7 +252,7 @@ namespace MeyadLeyaad1.Controllers
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
                 string url = p == null ? "" : "..\\" + p.Url;
-                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getStatusName(c.Status) , url, c.Id_Contribution);
+                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, c.Status , url, c.Id_Contribution);
                 dDonations.Add(d);
             }
             return dDonations;
@@ -284,6 +296,8 @@ namespace MeyadLeyaad1.Controllers
 
         public int getSubCategoryIdByCotegoryName(string categoryName)
         {
+            if (categoryName.Equals(""))
+                return -1;
            return db.Categories.FirstOrDefault(m => (m.Name == categoryName)).Id;
         }
 
@@ -296,9 +310,14 @@ namespace MeyadLeyaad1.Controllers
             return db.Donor.Where(d => (d.City == search.City)).ToList();
         }
 
+       
+
         public List<Contribution> serachDontions(Contribution search)
         {
-            return db.Contribution.Where(c => (/*c.Status == search.Status &&*/ c.Category == search.Category && c.Sub_Category == search.Sub_Category)).ToList();
+            return db.Contribution.Where(c=>( /*search.Category != null  && !search.Category.Equals("") &&*/  c.Category == search.Category))
+                 .Where(c => (/* search.Sub_Category != null &&!search.Sub_Category.Equals("") && */ c.Sub_Category == search.Sub_Category.Trim()))
+                 .Where(c => (/*search.Status != null &&  !search.Status.Equals("") &&*/ c.Status == search.Status))
+                 .Where(c => (/*search.Position != null && !search.Position.Equals("") &&*/ c.Position == search.Position)).ToList();
         }
 
         //calculate the route - help functions

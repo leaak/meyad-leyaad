@@ -21,14 +21,13 @@
             <!-- Form Elements -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <button type="submit" class="btn btn-primary" style="float:left">שמור</button>
                     חיפוש תרומה
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
                             <form role="form">
-                                <div class="form-group" style="width:20%">
+                                <div class="form-group" style="width:100%">
                                    @* <div class="form-group" style="width:100%; display:block">
                                         <label>מייל של התורם</label>
                                         <br />
@@ -41,21 +40,29 @@
                                         @Html.TextBoxFor(model => model.Item1.City)
                                     </div>*@
 
-                                @*    <div class="form-group" style="width:20%">
+                                     
+
+                                   <div class="form-group" >
                                         <label>סטטוס מוצר</label>
-                                        @Html.DropDownListFor(model => model.Item3.Name, (SelectList)ViewBag.ExemploList)
-                                    </div>*@
-
-
-                                    <div class="form-group" style="width:20%">
-                                        <label>קטגוריה</label>
-                                        @Html.DropDownListFor(model => model.Category, (SelectList)ViewBag.ExemploList)
+                                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.statuses)
                                     </div>
-                                   <div class="form-group">
+                                      <div class="form-group" >
+                                     <label>קטגוריה</label>
+                                      @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
+                                    "מוצרי חשמל"}), new { @id = "ddlCategory", @style = "width:200px;", @onchange = "javascript:getSubCategory(this.value);" })
+                                        </div>
+                                      <div class="form-group">
+                                     <label>תת קטגוריה</label>
+                                       @Html.DropDownListFor(m => m.Sub_Category,  new SelectList(new[]{" "}) , new { @id = "ddlSubCategory" })
+                                        </div>
+
+
+                                 
+                                 @*   <div class="form-group">
                         <label>תת קטגוריה</label>
                         @Html.DropDownListFor(model => model.Sub_Category, new SelectList(new[]{"ארון",
                                     "ספה", "כסא","שולחן" , "מיטות", "ספריה","אחר"}))
-                    </div>
+                    </div>*@
                                     @*<div class="form-group" style="width:20%">
                 <label>שנים בשימוש</label>
                 <br />
@@ -67,21 +74,22 @@
                                     <div class="form-group" style="width:20%">
                                         <label>מצב מוצר</label>
                                         @Html.DropDownListFor(model => model.Position, new SelectList(new[]{"חדש באריזה",
-"כמו חדש", "משומש","דרוש תיקון או שיפוץ"})))
+"כמו חדש", "משומש","דרוש תיקון או שיפוץ"}))
                                     </div>
 
                                     <br />
-                                    <table class="table-gray" id="result">
+                                    <table class="table-gray" style="display:none ; width:100%" id="donationsList">
+                                     
                                            <tr>
                                             <th>קטגוריה</th>
                                             <th>תת קטגוריה</th>
                                             <th>מצב</th>
                                             <th>תיאור</th>
-											<th>סטטוס</th>
                                                <th>תאריך שינוי אחרון</th>
         
     
                                         </tr>
+                                     
                                         @foreach (var item in ViewBag.list)
                                         {
                                             <tr>
@@ -101,7 +109,7 @@
                                     </table>
                                     <br />
 
-                                    <button type="submit" class="btn btn-primary" style="float: right; display: block">שמור</button>
+                                    <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
                                     <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
                                 </div>
                             </form>
@@ -119,4 +127,51 @@
     
     <!--End Pill Tabs   -->
 </div>
+
+<script>
+    function getSubCategory(_categoryName) {
+        var url = "/CreateEditDonation/getSubCategoryByCategoryId/";
+        //alert("cN: " + _categoryName);
+        $.ajax({
+            url: url,
+
+            //data:_categoryName,
+            data: { categoryName: _categoryName },
+
+            cache: false,
+            type: "POST",
+            dataType: 'json',
+            /*success: function (data) {
+                alert("success" + data);
+                var markup = "";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlSubCategory").html(markup).show();*/
+
+            success: function (json) {
+                //alert("success" + json);
+                $.each(json, function (i, value) {
+                    $('#ddlSubCategory').append($('<option>').text(value).attr('value', value));
+                });
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+                //alert(data);
+            }
+        });
+
+    }
+
+    $(document).ready(function () {
+        var list = "@ViewBag.list";
+        if (list.Count() > 0) {
+            $("#donationsList").show();
+        }
+
+
+    });
+
+</script>
 

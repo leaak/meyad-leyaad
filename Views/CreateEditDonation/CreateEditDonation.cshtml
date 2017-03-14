@@ -6,7 +6,7 @@
 }
 
 <div id="page-wrapper">
-    <h1>עריכת תרומה</h1>
+    <h1>@ViewBag.subject</h1>
 
     <div class="row">
         <div class="form-template">
@@ -27,25 +27,39 @@
                         @Html.HiddenFor(model => model.Item1.Id_Contribution)
                     </div>
 
-                    <div class="form-group" style="width:100%; display:none" id="email">
+                     <div class="form-group" style="width:100%; display:none">
+                        <br />
+                        @Html.HiddenFor(model => model.Item1.Id_Donor)
+                    </div>
+             
+
+                    <div class="form-group" style="display:none" id="email">
                         <label>מייל של התורם</label>
-                        @Html.EditorFor(model => model.Item1.Id_Donor) @*need to change to Email*@
+                        @*@Html.EditorFor(model => model.Item1.Id_Donor) @*need to change to Email*@
+                        <textarea id="donor_email"></textarea>
                         
                     </div>
 		
-		<div class="form-group" style="display:none" id="statuses">
+		<div class="form-group" style="display:none" id="status">
                         <label>סטטוס</label>
                          @Html.DropDownListFor(model => model.Item1.Status, (SelectList)
                                    ViewBag.Statuses)
                     </div>
-
+                    <div class="form-group">
+                        <label>קטגוריה</label>
                     @Html.DropDownListFor(m => m.Item1.Category, new SelectList(new[]{" ", "ריהוט",
-                                    "מוצרי חשמל"}), new { @id = "ddlCategory", @style = "width:200px;", @onchange = "javascript:getSubCategory(this.value);" })
-                    <br />
-                    <br />
-                    <select id="ddlSubCategory" name="ddlSubCategory" style="width: 200px"></select>
+                                    "מוצרי חשמל"}), new { @id = "ddlCategory", @onchange = "javascript:getSubCategory(this.value);" })
+                  
+                        </div>
+                 
+                    <div class="form-group">
+                        <label>תת קטגוריה</label>
+                    @*<select id="ddlSubCategory" name="ddlSubCategory" style="width: 200px"></select>*@
+                      @Html.DropDownListFor(m => m.Item1.Sub_Category, new SelectList(new[] { " "}), new { @id = "ddlSubCategory" })
 
-                    <br /><br />
+                    <br />
+                        </div>
+                        <br />
 
 
                     @*<div class="form-group">
@@ -135,7 +149,7 @@
                         לא לקחת מוצר שאינו עומד בקריטריונים.
                     </p>
                     <div class="buttons_wrap">
-                        <button type="submit">הוסף</button>
+                        <button type="submit">שמור</button>
                         <button type="reset">אפס שדות</button>
                     </div>
 
@@ -149,15 +163,19 @@
 
 
 <script>
+ 
+
     $(document).ready(function () {
         var type = "@ViewBag.type";
-        if (type == "secretary") {
-            $("#email").show();
-            $('#page-wrapper').addClass('sec');
-        }
+          if (type == "secretary") {
+              $("#email").show();
+              $("#status").show();
+              $('#page-wrapper').addClass('sec');
+          }
 
 
-    });
+
+      });
 
 
     function getSubCategory(_categoryName) {
@@ -182,7 +200,7 @@
 
             success: function (json) {
                 //alert("success" + json);
-                    $('#ddlSubCategory')=''
+                $('#ddlSubCategory').removeData();
                     $.each(json, function(i, value) {
                         $('#ddlSubCategory').append($('<option>').text(value).attr('value', value));
                     });

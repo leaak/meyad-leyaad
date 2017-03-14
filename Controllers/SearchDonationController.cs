@@ -7,7 +7,7 @@ using MeyadLeyaad1.Models;
 
 namespace MeyadLeyaad1.Controllers
 {
-    [Authorize]
+    // [Authorize]
     public class SearchDonationController : Controller
     {
         DBController db = new DBController();
@@ -19,6 +19,7 @@ namespace MeyadLeyaad1.Controllers
             ViewBag.list = db.serachDontions(c);
             var exemploList = new SelectList(db.getCategories());
             //var subList = new SelectList(db.getSubCategories());
+            ViewBag.statuses = new SelectList(db.getStatuses());
             ViewBag.ExemploList = exemploList;
             //return View(tuple);
             return View();

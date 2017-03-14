@@ -120,7 +120,7 @@ namespace MeyadLeyaad1.Controllers
         [AllowAnonymous]
         public ActionResult EditingDonation([Bind(Prefix = "Item1")] Contribution cmodel, [Bind(Prefix = "Item2")] Picture pmodel,  String returnUrl, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid && db.isEmailExists(db.getEmailById(cmodel.Id_Donor)))
+            if (ModelState.IsValid /*&& db.isEmailExists(db.getEmailById(cmodel.Id_Donor))*/)
             {
 
                 db.EditDonation(cmodel);
