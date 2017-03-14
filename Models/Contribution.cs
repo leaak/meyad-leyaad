@@ -11,13 +11,25 @@ namespace MeyadLeyaad1.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
+    using System.Globalization;
+    using System.Web.Security;
+
     
     public partial class Contribution
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Contribution { get; set; }
+        [Required]
         public int Id_Donor { get; set; }
+        [Required]
         public string Category { get; set; }
         public string Sub_Category { get; set; }
+        [Required]
         public string Position { get; set; }
         public string Description { get; set; }
         public System.DateTime Modified_Status_Date { get; set; }

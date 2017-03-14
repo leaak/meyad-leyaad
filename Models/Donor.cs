@@ -11,19 +11,39 @@ namespace MeyadLeyaad1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Data.Entity;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
+    using System.Globalization;
+    using System.Web.Security;
+
+
     public partial class Donor
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Donor { get; set; }
+        [Required]
         public string First_Name { get; set; }
+        [Required]
         public string Last_Name { get; set; }
+        [Required]
         public string City { get; set; }
+        [Required]
         public string Street { get; set; }
+        [Required]
         public int Building { get; set; }
+        [Required]
         public int House { get; set; }
+        [Required]
         public int Floor { get; set; }
+        [Required]
         public string Phone { get; set; }
+        [Required]
         public string Another_Phone { get; set; }
+        [Required]
         public string Email { get; set; }
         public string Fax { get; set; }
         public string Comments { get; set; }
