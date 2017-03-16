@@ -192,8 +192,8 @@ namespace MeyadLeyaad1.Controllers
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
                 string url = p == null ? "" : "..\\" + p.Url;
-                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , c.Status);
-                dDonations.Add(d);
+               // DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , c.Status);
+                //dDonations.Add(d);
             }
             return dDonations;
         }
@@ -307,18 +307,26 @@ namespace MeyadLeyaad1.Controllers
 
         public List<Donor> searchDonors(Donor search)
         {
-            return db.Donor.Where(d => (d.City == search.City)).ToList();
+            return db.Donor.Where(d => (d.City == search.City || d.Last_Name == search.Last_Name || d.Email == search.Email)).ToList();
         }
 
-       
 
-        public List<Contribution> serachDontions(Contribution search)
-        {
-            return db.Contribution.Where(c=>( /*search.Category != null  && !search.Category.Equals("") &&*/  c.Category == search.Category))
-                 .Where(c => (/* search.Sub_Category != null &&!search.Sub_Category.Equals("") && */ c.Sub_Category == search.Sub_Category.Trim()))
-                 .Where(c => (/*search.Status != null &&  !search.Status.Equals("") &&*/ c.Status == search.Status))
-                 .Where(c => (/*search.Position != null && !search.Position.Equals("") &&*/ c.Position == search.Position)).ToList();
+
+         public List<Contribution> serachDontions(Contribution search)
+         {
+            /*return db.Contribution.Where(c=>((search.Category != null  && !search.Category.Equals("")) || c.Category == search.Category))
+                 .Where(c => ((search.Sub_Category != null &&!search.Sub_Category.Equals("") ) ||  c.Sub_Category == search.Sub_Category.Trim()))
+                 .Where(c => ((search.Status != null &&  !search.Status.Equals("")) || c.Status == search.Status))
+                 .Where(c => ((search.Position != null && !search.Position.Equals("")) || c.Position == search.Position)).ToList();*/
+            var stocks = db.Contribution.AsQueryable();
+            if (search.Category != null) stocks = stocks.Where(c => (c.Category == search.Category));
+            if (search.Sub_Category != null) stocks = stocks.Where(c => (c.Sub_Category == search.Sub_Category.Trim()));
+            if (search.Status != null) stocks = stocks.Where(c => (c.Status == search.Status));
+            if (search.Position != null) stocks = stocks.Where(c => (c.Position == search.Position));
+            var result = stocks.ToList(); // execute query
+            return result;
         }
+  
 
         //calculate the route - help functions
         public List<Contribution> getContributionByStatus(string status)
