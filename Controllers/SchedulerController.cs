@@ -20,7 +20,7 @@ namespace MeyadLeyaad1.Controllers
         DBController db = new DBController();
        // [HttpPost]
 
-        public ActionResult Scheduler(String day = "")
+        public ActionResult Scheduler(String day = "Monday")
         {
             List<Dictionary<string, string>> lst = new List<Dictionary<string,string>>();
             if(day != null && !day.Equals(""))

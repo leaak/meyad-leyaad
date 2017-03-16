@@ -31,6 +31,18 @@
                                 </div>
 
                                 <div class="form-group" style="width:100%; display:block">
+                                    <label>שם פרטי</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.First_Name)
+                                </div>
+
+                                <div class="form-group" style="width:100%; display:block">
+                                    <label>שם משפחה</label>
+                                    <br />
+                                    @Html.TextBoxFor(model => model.Last_Name)
+                                </div>
+
+                                <div class="form-group" style="width:100%; display:block">
                                     <label>עיר</label>
                                     <br />
                                     @Html.TextBoxFor(model => model.City)
@@ -40,23 +52,23 @@
                               
                                 <br />
                               
-                                   <table class="table-gray" style="display:none ; width:100%" id="donationsList">
+                                   <table class="table-gray" style="/*display:none ;*/ width:100%" id="donationsList">
                                               <tr>
                                               <th>שם פרטי</th>
                                               <th>שם משפחה</th>
                                               <th>עיר</th>
                                               <th>דוא"ל</th>
+                                              
                                     </tr>
                                     @foreach (var item in ViewBag.list)
                                     {
                                         <tr>
-
-
                                             <td>@item.First_Name</td>
                                             <td>@item.Last_Name</td>
                                             <td>@item.City</td>
                                             <td>@item.Email</td>
-                                            <td><a href="@Url.Action("EditingDonation", "AddingDonation" , item)"> לפרטים ועריכה</a></td>
+                                            <td><a href="@Url.Action("EditProfile", "CreateEditProfile", new { id = @item.Id_Donor })"> לפרטים ועריכה</a></td>
+                                            <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {email = @item.Email})"> לצפיה בתרומות</a></td>
 
 
 

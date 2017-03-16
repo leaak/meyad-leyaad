@@ -1,97 +1,98 @@
 ﻿@model Tuple<MeyadLeyaad1.Models.Schedule>
 @{
     ViewBag.Title = "Scheduler";
-    ViewBag.Day = "Sunday";
+    ViewBag.Day="Sunday";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Scheduler</h2>
+<form role="form" method="post" >
+    <fieldset>
+     
 
-<div id="page-wrapper">
-    <form role="form" method="post" >
-        <fieldset>
-            <p style="display:inline" class=".fa-3x"> בחר יום ליצירת לוח זמנים לנהג:</p>
-            <div class="form-group" style="display:inline">
-                <select id="day" onchange="getSelectedDay()">
-                    <option value="Sunday">ראשון</option>
-                    <option value="Monday">שני</option>
-                    <option value="Tuesday">שלישי</option>
-                    <option value="Wednesday">רביעי</option>
-                    <option value="Thursday">חמישי</option>
-                </select>
-            </div>
-            <!-- Change this to a button or input when using this as a form -->
-            <button type="submit" class="btn btn-primary btn-block" onclick="getSelectedDay()">צור לוז לנהג</button>
-            @*<a href="@Url.Action("Scheduler", "Scheduler", new { day = getSelectedDay() })"> צור לו"ז"</a>*@
-        </fieldset>
+        <div class="form-group">
+            <select id="day" onchange="getSelectedDay()">
+                <option value="Sunday">ראשון</option>
+                <option value="Monday">שני</option>
+                <option value="Tuesday">שלישי</option>
+                <option value="Wednesday">רביעי</option>
+                <option value="Thursday">חמישי</option>
+            </select>
+        </div>
+        <!-- Change this to a button or input when using this as a form -->
+        @*<button type="submit" class="btn btn-primary btn-block" onclick="getSelectedDay()">צור לוז לנהג</button>*@
+    @*<a href="@Url.Action("Scheduler", "Scheduler", new { day = getSelectedDay() })"> צור לו"ז"</a>*@
+    </fieldset>
 
-        <div>
-            <table class="table-gray">
+    <div>
+        <table class="table-gray">
+            <tr>
+                <th>המוצר</th>
+                <th>שם התורם</th>
+                <th>עיר</th>
+                <th>כתובת</th>
+                <th>טלפון ניד</th>
+                <th>בין השעות</th>
+                <th>עריכה</th>
+                
+            </tr>
+
+            @foreach (var item in ViewBag.dict)
+            {
                 <tr>
-                    <th>המוצר</th>
-                    <th>שם התורם</th>
-                    <th>עיר</th>
-                    <th>כתובת</th>
-                    <th>טלפון ניד</th>
-                    <th>בין השעות</th>
+                    <td>@item["המוצר"]</td>
+                    <td>@item["שם התורם"]</td>
+                    <td>@item["עיר"]</td>
+                    <td>@item["כתובת"]</td>
+                    <td>@item["טלפון"]</td>
+                    <td>@item["בין השעות"]</td>
+                    <td class="td-links"><a href="@Url.Action("EditDonation", "CreateEditDonation", new { id = @item["מזהה"] })"> לפרטים ועריכה</a></td>
 
                 </tr>
-
-                @foreach (var item in ViewBag.dict)
-                {
-                    <tr>
-                        <td>@item["המוצר"]</td>
-                        <td>@item["שם התורם"]</td>
-                        <td>@item["עיר"]</td>
-                        <td>@item["כתובת"]</td>
-                        <td>@item["טלפון"]</td>
-                        <td>@item["בין השעות"]</td>
-
-
-                    </tr>
+                    }
                 }
-            </table>
-        </div>
+        </table>
+</div>
 
-    </form>
+</form>
 
-    <script>
-
-        function getSelectedDay() {
-            return document.getElementById("day").value;
-        }
-
-
-        /*  function getSelectedDay() {
-              var url = "/Scheduler/Scheduler?day=" + document.getElementById("day").value;
-              alert("cN: " + document.getElementById("day").value);
-
-              $.ajax({
-                  url: url,
-                  data: { day: document.getElementById("day").value },
-
-                  cache: false,
-                  type: "POST",
-                  dataType: 'json',
-                  /*success: function (data) {
-                      alert("success" + data);
-                      var markup = "";
-                      for (var x = 0; x < data.length; x++) {
-                          markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                      }
-                      $("#ddlSubCategory").html(markup).show();
-
-                  success: function (json) {
-                      alert("success" + json);
+<script>
+ 
+    function getSelectedDay() {
+        return document.getElementById("day").value;
+    }
 
 
-                  },
-                  error: function (reponse) {
-                      alert("error : " + reponse);
-                      //alert(data);
-                  }
-              });
+  /*  function getSelectedDay() {
+        var url = "/Scheduler/Scheduler?day=" + document.getElementById("day").value;
+        alert("cN: " + document.getElementById("day").value);
 
-          }*/
+        $.ajax({
+            url: url,
+            data: { day: document.getElementById("day").value },
 
-    </script>
-    </div>
+            cache: false,
+            type: "POST",
+            dataType: 'json',
+            /*success: function (data) {
+                alert("success" + data);
+                var markup = "";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlSubCategory").html(markup).show();
+
+            success: function (json) {
+                alert("success" + json);
+               
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+                //alert(data);
+            }
+        });
+
+    }*/
+        
+</script>
