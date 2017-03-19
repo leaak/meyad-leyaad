@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Scheduler";
     ViewBag.Day="Sunday";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Scheduler</h2>
+@*<h2>Scheduler</h2>
 <form role="form" method="post" >
     <fieldset>
      
 
-        <div class="form-group">
+       @* <div class="form-group">
             <select id="day" onchange="getSelectedDay()">
                 <option value="Sunday">ראשון</option>
                 <option value="Monday">שני</option>
@@ -18,11 +18,11 @@
                 <option value="Wednesday">רביעי</option>
                 <option value="Thursday">חמישי</option>
             </select>
-        </div>
+        </div>@*
         <!-- Change this to a button or input when using this as a form -->
         @*<button type="submit" class="btn btn-primary btn-block" onclick="getSelectedDay()">צור לוז לנהג</button>*@
-    @*<a href="@Url.Action("Scheduler", "Scheduler", new { day = getSelectedDay() })"> צור לו"ז"</a>*@
-    </fieldset>
+    @*<a href="@Url.Action("Scheduler", "Scheduler", new { day = getSelectedDay() })"> צור לו"ז"</a>
+    </fieldset>*@
 
     <div>
         <table class="table-gray">
@@ -39,6 +39,7 @@
 
             @foreach (var item in ViewBag.dict)
             {
+                var id = "http://localhost:51475/CreateEditDonation/EditDonation/" + @item["מזהה"];
                 <tr>
                     <td>@item["המוצר"]</td>
                     <td>@item["שם התורם"]</td>
@@ -46,10 +47,10 @@
                     <td>@item["כתובת"]</td>
                     <td>@item["טלפון"]</td>
                     <td>@item["בין השעות"]</td>
-                    <td class="td-links"><a href="@Url.Action("EditDonation", "CreateEditDonation", new { id = @item["מזהה"] })"> לפרטים ועריכה</a></td>
+                    <td class="td-links"><a href=@id> לפרטים ועריכה</a></td
+                    <td>הערות</td>
 
                 </tr>
-                    }
                 }
         </table>
 </div>
@@ -57,42 +58,42 @@
 </form>
 
 <script>
- 
+
     function getSelectedDay() {
         return document.getElementById("day").value;
     }
 
 
-  /*  function getSelectedDay() {
-        var url = "/Scheduler/Scheduler?day=" + document.getElementById("day").value;
-        alert("cN: " + document.getElementById("day").value);
+    /*  function getSelectedDay() {
+          var url = "/Scheduler/Scheduler?day=" + document.getElementById("day").value;
+          alert("cN: " + document.getElementById("day").value);
+  
+          $.ajax({
+              url: url,
+              data: { day: document.getElementById("day").value },
+  
+              cache: false,
+              type: "POST",
+              dataType: 'json',
+              /*success: function (data) {
+                  alert("success" + data);
+                  var markup = "";
+                  for (var x = 0; x < data.length; x++) {
+                      markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                  }
+                  $("#ddlSubCategory").html(markup).show();
+  
+              success: function (json) {
+                  alert("success" + json);
+                 
+  
+              },
+              error: function (reponse) {
+                  alert("error : " + reponse);
+                  //alert(data);
+              }
+          });
+  
+      }*/
 
-        $.ajax({
-            url: url,
-            data: { day: document.getElementById("day").value },
-
-            cache: false,
-            type: "POST",
-            dataType: 'json',
-            /*success: function (data) {
-                alert("success" + data);
-                var markup = "";
-                for (var x = 0; x < data.length; x++) {
-                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                }
-                $("#ddlSubCategory").html(markup).show();
-
-            success: function (json) {
-                alert("success" + json);
-               
-
-            },
-            error: function (reponse) {
-                alert("error : " + reponse);
-                //alert(data);
-            }
-        });
-
-    }*/
-        
 </script>

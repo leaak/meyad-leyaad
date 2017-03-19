@@ -26,33 +26,33 @@
                             <form role="form">
                                 <div class="form-group" style="width:100%; display:block">
                                     <label>מייל של התורם</label>
-                                    <br />
+                                  
                                     @Html.TextBoxFor(model => model.Email)
                                 </div>
 
                                 <div class="form-group" style="width:100%; display:block">
                                     <label>שם פרטי</label>
-                                    <br />
+                                 
                                     @Html.TextBoxFor(model => model.First_Name)
                                 </div>
 
                                 <div class="form-group" style="width:100%; display:block">
                                     <label>שם משפחה</label>
-                                    <br />
+                                    
                                     @Html.TextBoxFor(model => model.Last_Name)
                                 </div>
 
                                 <div class="form-group" style="width:100%; display:block">
                                     <label>עיר</label>
-                                    <br />
+                                 
                                     @Html.TextBoxFor(model => model.City)
                                 </div>
 
                                 <br />
                               
                                 <br />
-                              
-                                   <table class="table-gray" style="/*display:none ;*/ width:100%" id="donationsList">
+                              <div id="donationsList" >
+                                   <table class="table-gray" style="/*display:none ;*/ width:100%">
                                               <tr>
                                               <th>שם פרטי</th>
                                               <th>שם משפחה</th>
@@ -60,21 +60,27 @@
                                               <th>דוא"ל</th>
                                               
                                     </tr>
-                                    @foreach (var item in ViewBag.list)
+                                       @bool hasVal = false;
+                                    foreach (var item in ViewBag.list)
                                     {
+                                        hasVal = true;
                                         <tr>
                                             <td>@item.First_Name</td>
                                             <td>@item.Last_Name</td>
                                             <td>@item.City</td>
                                             <td>@item.Email</td>
                                             <td><a href="@Url.Action("EditProfile", "CreateEditProfile", new { id = @item.Id_Donor })"> לפרטים ועריכה</a></td>
-                                            <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {email = @item.Email})"> לצפיה בתרומות</a></td>
+                                            <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {id = @item.Id_Donor})"> לצפיה בתרומות</a></td>
 
 
 
                                         </tr>
                                     }
                                 </table>
+                                  if(!hasVal){
+                                      <h6>"לא נמצאו תוצאות"</h6>
+                                  }
+                                  </div>
 
                                 <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
                                 <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
@@ -99,7 +105,7 @@
 
     $(document).ready(function () {
         var list = "@ViewBag.list";
-          if (list.Count() > 0) {
+          if (list.length() > 0) {
               $("#donationsList").show();
           }
 

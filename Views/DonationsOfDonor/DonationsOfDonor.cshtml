@@ -37,7 +37,7 @@
             </tr>
         }
     </table>
-    <a href="@Url.Action("CreateDonation", "CreateEditDonation")" class="btn btn-primary btn-block">הוספת תרומה </a>
+    <a href="@Url.Action("CreateDonation", "CreateEditDonation" , new { id = @ViewBag.id})" class="btn btn-primary btn-block">הוספת תרומה </a>
 </div>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>

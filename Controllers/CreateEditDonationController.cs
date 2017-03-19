@@ -16,13 +16,17 @@ namespace MeyadLeyaad1.Controllers
         DBController db = new DBController();
         //
         // GET: /CreateEditDonation/
+         [Authorize]
 
-        public ActionResult CreateDonation()
+        public ActionResult CreateDonation(int id = -1)
         {
-            var tuple = new Tuple<Contribution, Picture>(new Contribution(), new Picture());
-
+            Contribution c = new Contribution();
+            if (id > -1)
+                c.Id_Donor = id;
+            var tuple = new Tuple<Contribution, Picture>(c, new Picture());
             ViewBag.Categories = new SelectList(db.getCategories()); 
-            ViewBag.Statuses = new SelectList(db.getStatuses()); 
+            ViewBag.Statuses = new SelectList(db.getStatuses());
+            ViewBag.subc = new SelectList (new[]{" "}); 
             //var subList = new SelectList(db.getSubCategories());
             if (Session["type"].ToString().Equals("1"))
             {
@@ -37,22 +41,24 @@ namespace MeyadLeyaad1.Controllers
             ViewBag.subject = "הוספת תרומה";
             return View("CreateEditDonation", tuple);
         }
-
+         [Authorize]
         public ActionResult EditDonation(int id)
         {
-            var tuple = new Tuple<Contribution, Picture>(db.getContribution(id), db.getPicture(id));
+             Contribution c = db.getContribution(id);
+            var tuple = new Tuple<Contribution, Picture>(c, db.getPicture(id));
             //var subList = new SelectList(db.getSubCategories());
             ViewBag.Categories = new SelectList(db.getCategories());
-            ViewBag.Statuses = new SelectList(db.getStatuses()); 
-            if (Session["type"].ToString().Equals("1"))
-            {
-                ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
-                ViewBag.type = "secretary";
+            ViewBag.Statuses = new SelectList(db.getStatuses());
+            ViewBag.subc = new SelectList(new[] {c.Sub_Category}); 
+            if (Session["type"] != null && Session["type"].ToString().Equals("2"))
+            {            
+                ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
+                ViewBag.type = "donor";
             }
             else
             {
-                ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
-                ViewBag.type = "donor";
+                ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
+                ViewBag.type = "secretary";
             }
             ViewBag.subject = "עריכת תרומה";
             return View("CreateEditDonation", tuple);
@@ -66,35 +72,37 @@ namespace MeyadLeyaad1.Controllers
 
             if (ModelState.IsValid /*&& (Session["type"].ToString().Equals("2") || db.isEmailExists(db.getEmailById(cmodel.Id_Donor)))*/)
             {
-                int idContribution = -1;
+                int idContribution = cmodel.Id_Contribution;
 
                 if (cmodel.Id_Contribution <= 0)
                 {
                     if (Session["type"].ToString().Equals("2"))
                         idContribution = db.AddDonation(cmodel, Session["email"].ToString());
                     else
-                        idContribution = db.AddDonation(cmodel , "tetst");
+                        idContribution = db.AddDonation(cmodel , cmodel.Id_Donor);
 
-                    for (var i = 0; i < Request.Files.Count; i++)
-                    {
-                        var newFile = Request.Files[i];
-                        if (newFile != null && newFile.ContentLength > 0)
-                        {
-                            int idPicture = db.getNextPictureId();
-                            var fileName = Path.GetFileName(newFile.FileName);
-                            var path = Path.Combine(Server.MapPath("~/DonationImages/"), idContribution + "_" + idPicture + ".jpg");
-
-                            newFile.SaveAs(path);
-                            path = path.Substring(path.IndexOf("DonationImages"));
-                            db.AddPicture(idPicture, path, idContribution);
-                        }
-
-                    }
+                
                     sendEmail("rivkirom4@gmail.com", "תודה רבה על תרומתך, נבחן את ההצעה וניצור איתך קשר");
                 }
                 else
                 {
                     db.EditDonation(cmodel);
+                }
+
+                for (var i = 0; i < Request.Files.Count; i++)
+                {
+                    var newFile = Request.Files[i];
+                    if (newFile != null && newFile.ContentLength > 0)
+                    {
+                        int idPicture = db.getNextPictureId();
+                        var fileName = Path.GetFileName(newFile.FileName);
+                        var path = Path.Combine(Server.MapPath("~/DonationImages/"), idContribution + "_" + idPicture + ".jpg");
+
+                        newFile.SaveAs(path);
+                        path = path.Substring(path.IndexOf("DonationImages"));
+                        db.AddPicture(idPicture, path, idContribution);
+                    }
+
                 }
 
 
@@ -146,7 +154,11 @@ namespace MeyadLeyaad1.Controllers
                 Body = body
             })
             {
-                smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception e) { }
             }
         }
 
@@ -158,6 +170,9 @@ namespace MeyadLeyaad1.Controllers
             }
             else
             {
+                if(Session["type"] == null)
+                    return RedirectToAction("Login", "Account");
+
 
                 if (Session["type"].ToString().Equals("1"))
                     return RedirectToAction("Index", "Index");

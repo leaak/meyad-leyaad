@@ -42,16 +42,16 @@
 
                                      
 
-                                   <div class="form-group" >
+                                   <div class="form-group" style="width:100%; display:block">
                                         <label>סטטוס מוצר</label>
                                         @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.statuses)
                                     </div>
-                                      <div class="form-group" >
+                                      <div class="form-group" style="width:100%; display:block">
                                      <label>קטגוריה</label>
                                       @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
                                     "מוצרי חשמל"}), new { @id = "ddlCategory", @style = "width:200px;", @onchange = "javascript:getSubCategory(this.value);" })
                                         </div>
-                                      <div class="form-group">
+                                      <div class="form-group" style="width:100%; display:block">
                                      <label>תת קטגוריה</label>
                                        @Html.DropDownListFor(m => m.Sub_Category,  new SelectList(new[]{" "}) , new { @id = "ddlSubCategory" })
                                         </div>
@@ -71,14 +71,15 @@
             </div>*@
 
 
-                                    <div class="form-group" style="width:20%">
+                                    <div class="form-group" style="width:100%; display:block">
                                         <label>מצב מוצר</label>
                                         @Html.DropDownListFor(model => model.Position, new SelectList(new[]{"חדש באריזה",
 "כמו חדש", "משומש","דרוש תיקון או שיפוץ"}))
                                     </div>
 
                                     <br />
-                                    <table class="table-gray" style="display:none ; width:100%" id="donationsList">
+                                     <div id="donationsList" style="display:none">
+                                    <table class="table-gray" style=" width:100%" >
                                      
                                            <tr>
                                             <th>קטגוריה</th>
@@ -107,6 +108,7 @@
                                             </tr>
                                         }
                                     </table>
+                                         </div>
                                     <br />
 
                                     <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
@@ -167,7 +169,7 @@
 
     $(document).ready(function () {
         var list = "@ViewBag.list";
-        if (list.Count() > 0) {
+        if (list.length() > 0) {
             $("#donationsList").show();
         }
 

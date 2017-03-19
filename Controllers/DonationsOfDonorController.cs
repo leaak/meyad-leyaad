@@ -12,9 +12,10 @@ namespace MeyadLeyaad1.Controllers
         // GET: /DonationsOfDonor/
         DBController db = new DBController();
 
-        public ActionResult DonationsOfDonor(string email)
+        public ActionResult DonationsOfDonor(int id)
         {
-            ViewBag.displayDonation = db.getDonationsOfDonor(email);
+            ViewBag.displayDonation = db.getDonationsOfDonor(db.getEmailById(id));
+            ViewBag.id = id;
             return View();
         }
 

@@ -33,12 +33,12 @@
                     </div>
              
 
-                    <div class="form-group" style="display:none" id="email">
+                   @* <div class="form-group" style="display:none" id="email">
                         <label>מייל של התורם</label>
-                        @*@Html.EditorFor(model => model.Item1.Id_Donor) @*need to change to Email*@
+                        Html.EditorFor(model => model.Item1.Id_Donor) @*need to change to Email
                         <textarea id="donor_email"></textarea>
                         
-                    </div>
+                    </div>*@
 		
 		<div class="form-group" style="display:none" id="status">
                         <label>סטטוס</label>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label>תת קטגוריה</label>
                     @*<select id="ddlSubCategory" name="ddlSubCategory" style="width: 200px"></select>*@
-                      @Html.DropDownListFor(m => m.Item1.Sub_Category, new SelectList(new[] { " "}), new { @id = "ddlSubCategory" })
+                      @Html.DropDownListFor(m => m.Item1.Sub_Category,  (SelectList)ViewBag.subc, new { @id = "ddlSubCategory" })
 
                     <br />
                         </div>
@@ -74,12 +74,7 @@
                     </div>*@
                     <div class="form-group">
                         <label>שנים בשימוש</label>
-                        <select>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>יותר</option>
-                        </select>
+                        @Html.DropDownListFor(m => m.Item1.years, new SelectList(new[] { "1" , "2" , "3" , "יותר"}), new { @id = "ddlSubCategory" })
                     </div>
 
 
@@ -200,7 +195,7 @@
 
             success: function (json) {
                 //alert("success" + json);
-                $('#ddlSubCategory').empty();
+                $('#ddlSubCategory').removeData();
                     $.each(json, function(i, value) {
                         $('#ddlSubCategory').append($('<option>').text(value).attr('value', value));
                     });
