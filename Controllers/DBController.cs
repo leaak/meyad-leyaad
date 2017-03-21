@@ -37,7 +37,9 @@ namespace MeyadLeyaad1.Controllers
 
         public void AddDonor(Donor dmodel, Schedule smodel)
         {
-            int id = db.Donor.Add(new Donor { Email = dmodel.Email, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments }).Id_Donor;
+            Donor d = db.Donor.Add(new Donor { Email = dmodel.Email, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments });
+            db.SaveChanges();
+            int id = d.Id_Donor;
             db.Schedule.Add(new Schedule { Day = smodel.Day, Id_User = id, End_Time = smodel.End_Time, Start_Time = smodel.Start_Time });
             db.SaveChanges();
         }
@@ -53,8 +55,6 @@ namespace MeyadLeyaad1.Controllers
         {
             Contribution origin = getContribution(c.Id_Contribution);
             c.Modified_Status_Date = DateTime.Now;
-            if (c.Status == null)
-                c.Status = "לפני סינון";
             db.Entry(origin).CurrentValues.SetValues(c);
             db.SaveChanges();
         }
@@ -70,12 +70,17 @@ namespace MeyadLeyaad1.Controllers
         }
 
 
-        public int AddDonation(Contribution model , string email)
+        public int AddDonation(Contribution model , int id)
         {
-            int id = getIdByEmail(email);
-            int newID =  db.Contribution.Add(new Contribution { Id_Donor = id, Category = model.Category, Sub_Category = model.Sub_Category, Position = model.Position, Description = model.Description, Modified_Status_Date = DateTime.Now, Status = model.Status }).Id_Contribution;
+            //int id = getIdByEmail(email);
+            Contribution c =  db.Contribution.Add(new Contribution { Id_Donor = id, Category = model.Category, Sub_Category = model.Sub_Category, Position = model.Position, Description = model.Description, Modified_Status_Date = DateTime.Now, Status = "לפני סינון"  , years = model.years});
             db.SaveChanges();
-            return newID;
+            return c.Id_Contribution;
+        }
+
+        public int AddDonation(Contribution model, string email)
+        {
+            return AddDonation(model, getIdByEmail(email));
         }
 
         public List<String> getStatuses()
@@ -192,8 +197,8 @@ namespace MeyadLeyaad1.Controllers
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
                 string url = p == null ? "" : "..\\" + p.Url;
-               // DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , c.Status);
-                //dDonations.Add(d);
+                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, getDonor(c.Id_Donor).City, url, c.Id_Contribution , getDonorName(getEmailById(c.Id_Donor)) , c.Status);
+                dDonations.Add(d);
             }
             return dDonations;
         }
@@ -247,7 +252,14 @@ namespace MeyadLeyaad1.Controllers
         public List<DisplayDonation> getDonationsOfDonor(string email)
         {
             int id = getIdByEmail(email);
-            List <Contribution>donations= db.Contribution.Where(c => (c.Id_Donor == id)).ToList();
+            //List <Contribution>donations= db.Contribution.Where(c => (c.Id_Donor == id)).ToList();
+            List<Contribution> donations =
+            (from c in db.Contribution 
+            join s in db.Statuses 
+            on c.Status equals s.Name 
+            where (c.Id_Donor == id && s.Taken == false)
+            select c).ToList();
+
             List<DisplayDonation> dDonations = new List<DisplayDonation>();
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
@@ -307,24 +319,42 @@ namespace MeyadLeyaad1.Controllers
 
         public List<Donor> searchDonors(Donor search)
         {
-            return db.Donor.Where(d => (d.City == search.City || d.Last_Name == search.Last_Name || d.Email == search.Email)).ToList();
+            return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
         }
 
+        public /*List<Contribution>*/ void test(Contribution search)
+        {
 
+            String constring = ConfigurationManager.ConnectionStrings["RConnection"].ConnectionString;
+            SqlConnection con = new SqlConnection(constring);
+            string query = "select * From Employee";
+            DataTable dt = new DataTable();
+            dt.TableName = "Employee";
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter(query, con);
+        }
+       
 
-         public List<Contribution> serachDontions(Contribution search)
-         {
-            /*return db.Contribution.Where(c=>((search.Category != null  && !search.Category.Equals("")) || c.Category == search.Category))
-                 .Where(c => ((search.Sub_Category != null &&!search.Sub_Category.Equals("") ) ||  c.Sub_Category == search.Sub_Category.Trim()))
-                 .Where(c => ((search.Status != null &&  !search.Status.Equals("")) || c.Status == search.Status))
-                 .Where(c => ((search.Position != null && !search.Position.Equals("")) || c.Position == search.Position)).ToList();*/
-            var stocks = db.Contribution.AsQueryable();
-            if (search.Category != null) stocks = stocks.Where(c => (c.Category == search.Category));
-            if (search.Sub_Category != null) stocks = stocks.Where(c => (c.Sub_Category == search.Sub_Category.Trim()));
-            if (search.Status != null) stocks = stocks.Where(c => (c.Status == search.Status));
-            if (search.Position != null) stocks = stocks.Where(c => (c.Position == search.Position));
-            var result = stocks.ToList(); // execute query
-            return result;
+        public List<Contribution> serachDontions(Contribution search)
+        {
+            /*return db.Contribution.Where(c=>( /*search.Category != null  && !search.Category.Equals("") &&  c.Category == search.Category))
+                 .Where(c => (/* search.Sub_Category != null &&!search.Sub_Category.Equals("") &&  c.Sub_Category == search.Sub_Category.Trim()))
+                 .Where(c => (/*search.Status != null &&  !search.Status.Equals("") && c.Status == search.Status))
+                 .Where(c => (/*search.Position != null && !search.Position.Equals("") && c.Position == search.Position)).ToList();*/
+             List<Contribution> result = (from c in db.Contribution
+                                          where (/*search.Status != null &&*/ search.Status == c.Status)
+                                          where (/*search.Category != null && */search.Category == c.Category)
+                                          where (/*search.Sub_Category != null &&*/ search.Sub_Category == c.Sub_Category)
+                                          where (/*search.Position != null &&*/ search.Position == c.Position)
+                                          select c).ToList();
+
+            //List<Contribution> donationPerDay =
+            //(from c in db.Contribution 
+            //join s in db.Schedule on c.Id_Donor equals s.Id_User 
+            //where s.Day == day
+            //select c).ToList();
+
+             return result;
         }
   
 
@@ -372,7 +402,7 @@ namespace MeyadLeyaad1.Controllers
             return donationPerDay;
         }
 
-        public List<Schedule> getSchedulfordonor(int idDonor)
+        public List<Schedule> getScheduleForDonor(int idDonor)
         {
                       
               return db.Schedule.Where(s => (s.Id_User == idDonor)).ToList();           

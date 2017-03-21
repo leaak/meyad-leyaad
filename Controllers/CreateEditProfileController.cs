@@ -19,16 +19,16 @@ namespace MeyadLeyaad1.Controllers
         {
             var tuple = new Tuple<Donor, Schedule , Users>(new Donor(), new Schedule() , new Users());
             ViewBag.UserName = Session["email"];
-           /* if (Session["type"].ToString().Equals("1"))
+            if (Session["type"].ToString().Equals("1"))
             {
                 ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
                 ViewBag.type = "secretary";
             }
             else
-            {*/
+            {
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
-            //}
+            }
             return View("CreateEditProfile", tuple);
         }
 
@@ -36,7 +36,7 @@ namespace MeyadLeyaad1.Controllers
         {
             if (id == -1)
                 id = db.getUserId(Session["email"].ToString(), Session["password"].ToString());
-            var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), new Schedule(), new Users());
+            var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), db.getScheduleForDonor(id).FirstOrDefault(), new Users());
 
             ViewBag.UserName = Session["email"];
             if (Session["type"].ToString().Equals("1"))
@@ -49,7 +49,6 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
-            ViewBag.layout = "~/Views/Shared/_Layout.cshtml";
             return View("CreateEditProfile", tuple);
         }
 

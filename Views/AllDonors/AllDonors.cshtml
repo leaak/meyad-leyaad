@@ -27,9 +27,8 @@
                 <td>@item.City</td>
                 <td>@item.Email</td>
                 <td>@item.Id_Donor</td>
-                        <td class="td-links"><a href="@Url.Action("EditProfile", "CreateEditProfile", new { id = @item.Id_Donor })"> לפרטים ועריכה</a></td>
-                <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {email = @item.Email})"> לצפיה בתרומות</a></td>
-
+                <td class="td-links"><a href="@Url.Action("EditProfile", "CreateEditProfile", new { id = @item.Id_Donor })"> לפרטים ועריכה</a></td>
+                <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {id = @item.Id_Donor})"> לצפיה בתרומות</a></td>
 
 
             </tr>

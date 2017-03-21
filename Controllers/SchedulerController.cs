@@ -20,12 +20,18 @@ namespace MeyadLeyaad1.Controllers
         DBController db = new DBController();
        // [HttpPost]
 
-        public ActionResult Scheduler(String day = "Monday")
+        public ActionResult Scheduler()
         {
-            List<Dictionary<string, string>> lst = new List<Dictionary<string,string>>();
-            if(day != null && !day.Equals(""))
-                lst = getDonationByDayAndCity(day);
+
+            DateTime deactivateDate = DateTime.UtcNow.AddDays(1);
+            String day = deactivateDate.DayOfWeek.ToString();
+            if (day.Equals("Friday"))
+                day = "Sunday";
+            List<Dictionary<string, string>> lst = new List<Dictionary<string, string>>();          
+            lst = getDonationByDayAndCity(day);
             ViewBag.dict = lst;
+            Response.AddHeader("Content-Disposition", "filename=schedule.xls");
+            Response.ContentType = "application/Excel";
             return View();
         }
         
@@ -55,7 +61,7 @@ namespace MeyadLeyaad1.Controllers
                 string donorName = donor.First_Name + ' ' + donor.Last_Name;
                 string donorPhone = donor.Phone;
 
-                foreach (Schedule s in db.getSchedulfordonor(donor.Id_Donor))
+                foreach (Schedule s in db.getScheduleForDonor(donor.Id_Donor))
                 {
                     details = new Dictionary<string, string>();
                     details["בין השעות"] = s.Start_Time + " ל " + s.End_Time;
@@ -64,7 +70,7 @@ namespace MeyadLeyaad1.Controllers
                     details["כתובת"] = address;
                     details["עיר"] = donor.City;
                     details["המוצר"] = donation.Sub_Category;
-                    details["מזהה"] = ""+donation.Id_Contribution;
+                    details["מזהה"] = "" + donation.Id_Contribution;
                 }
                 dictContributionInCity.Add(details);
             }

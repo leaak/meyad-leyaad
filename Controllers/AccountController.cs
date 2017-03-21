@@ -99,8 +99,9 @@ namespace MeyadLeyyad1.Controllers
         {
           //  WebSecurity.Logout();
             FormsAuthentication.SignOut();
-
-            return RedirectToAction("Account", "Login");
+            Session.Clear();
+            Session.RemoveAll();
+            return RedirectToAction("Login", "Account");
         }
 
         //

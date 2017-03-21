@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "SearchDonor";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Size = ViewBag.list.Count;
 }
 
 <div id="page-wrapper">
@@ -51,7 +52,8 @@
                                 <br />
                               
                                 <br />
-                              <div id="donationsList" >
+                              <div id="donationsList" style="display:none"/>
+                                   
                                    <table class="table-gray" style="/*display:none ;*/ width:100%">
                                               <tr>
                                               <th>שם פרטי</th>
@@ -60,10 +62,9 @@
                                               <th>דוא"ל</th>
                                               
                                     </tr>
-                                       @bool hasVal = false;
-                                    foreach (var item in ViewBag.list)
+
+                                    @foreach (var item in ViewBag.list)
                                     {
-                                        hasVal = true;
                                         <tr>
                                             <td>@item.First_Name</td>
                                             <td>@item.Last_Name</td>
@@ -77,9 +78,9 @@
                                         </tr>
                                     }
                                 </table>
-                                  if(!hasVal){
-                                      <h6>"לא נמצאו תוצאות"</h6>
-                                  }
+                                <div id="noResults" style="display:none">
+                                      <h6>לא נמצאו תוצאות</h6>
+                                
                                   </div>
 
                                 <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
@@ -104,10 +105,13 @@
 <script>
 
     $(document).ready(function () {
-        var list = "@ViewBag.list";
-          if (list.length() > 0) {
+  
+
+          if ("@ViewBag.Size" > 0) {
               $("#donationsList").show();
           }
+          else
+              $("#noResults").show();
 
 
       });
