@@ -4,6 +4,17 @@
     ViewBag.Day="Sunday";
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .doright {
+        float: right;
+        margin: 5px;
+        text-align: center;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        display:inline-block;
+        width:100%
+    }
+</style>
 
 @*<h2>Scheduler</h2>
 <form role="form" method="post" >
@@ -25,7 +36,7 @@
     </fieldset>*@
 
     <div>
-        <table class="table-gray">
+        <table class="table-gray" id="dsTable">
             <tr>
                 <th>המוצר</th>
                 <th>שם התורם</th>
@@ -55,7 +66,7 @@
         </table>
 </div>
 
-</form>
+@*</form>*@
 
 <script>
 
@@ -63,6 +74,10 @@
         return document.getElementById("day").value;
     }
 
+    function deleteRow(btn) {
+        var row = btn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
 
     /*  function getSelectedDay() {
           var url = "/Scheduler/Scheduler?day=" + document.getElementById("day").value;
