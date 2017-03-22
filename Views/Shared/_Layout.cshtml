@@ -45,21 +45,21 @@
             <!-- navbar-top-links -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- main dropdown -->
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="top-label label label-danger">3</span><i class="fa fa-envelope fa-3x"></i>
                     </a>
                     <!-- dropdown-messages -->
                     
                     <!-- end dropdown-messages -->
-                </li>
+                </li>*@
 
-                <li class="dropdown">
+                @*<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <span class="top-label label label-success">4</span>  <i class="fa fa-tasks fa-3x"></i>
                     </a>
                     <!-- dropdown tasks -->
-                    <ul class="dropdown-menu dropdown-tasks">
+                    @*<ul class="dropdown-menu dropdown-tasks">
                         <li>
                             <a href="#">
                                 <div>
@@ -132,68 +132,68 @@
                         </li>
                     </ul>
                     <!-- end dropdown-tasks -->
-                </li>
+                </li>*@
 
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <span class="top-label label label-warning">5</span>  <i class="fa fa-bell fa-3x"></i>
-                    </a>
-                    <!-- dropdown alerts-->
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i>תגובה חדשה...
-                                    <span class="pull-right text-muted small">לפני 4 דקות</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i>3 
-                                    <span class="pull-right text-muted small">לפני 12 דקות</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i>נשלחה הודעה
-                                    <span class="pull-right text-muted small">לפני 4 שניות</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i>משימה חדשה
-                                    <span class="pull-right text-muted small">לפני 5 דקות</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        @*<li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i>Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>*@
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>צפה בכל ההתראות</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- end dropdown-alerts -->
-                </li>
+                @*<li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <span class="top-label label label-warning">5</span>  <i class="fa fa-bell fa-3x"></i>
+        </a>
+        <!-- dropdown alerts-->
+        <ul class="dropdown-menu dropdown-alerts">
+            <li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-comment fa-fw"></i>תגובה חדשה...
+                        <span class="pull-right text-muted small">לפני 4 דקות</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-twitter fa-fw"></i>3
+                        <span class="pull-right text-muted small">לפני 12 דקות</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-envelope fa-fw"></i>נשלחה הודעה
+                        <span class="pull-right text-muted small">לפני 4 שניות</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-tasks fa-fw"></i>משימה חדשה
+                        <span class="pull-right text-muted small">לפני 5 דקות</span>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            @*<li>
+                <a href="#">
+                    <div>
+                        <i class="fa fa-upload fa-fw"></i>Server Rebooted
+                        <span class="pull-right text-muted small">4 minutes ago</span>תור
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a class="text-center" href="#">
+                    <strong>צפה בכל ההתראות</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+        <!-- end dropdown-alerts -->
+    </li>*@
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -201,12 +201,13 @@
                     </a>
                     <!-- dropdown user-->
                     <ul class="dropdown-menu dropdown-user">
-                        <li>
+                        @*<li>
                             <a href="#"><i class="fa fa-gear fa-fw"></i>הגדרות</a>
-                        </li>
+                        </li>*@
                         <li class="divider"></li>
                         <li>
-                             <a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-out fa-fw"></i>יציאה</a>
+
+                            <a href="@Url.Action("LogOff", "Account")" style="text-align:right"><i class="fa fa-sign-out fa-fw"></i>יציאה</a>
                         </li>
                     </ul>
                     <!-- end dropdown-user -->
@@ -253,27 +254,25 @@
                     <li>
                         
                         <a href="@Url.Action("Index", "Index")">@*<i class="fa fa-dashboard fa-fw">*@</i>דף הבית</a>
+                    
+                    
+                    <li>
+                        <a href="@Url.Action("CreateProfile", "CreateEditProfile")">תורם חדש</a>
                     </li>
                     <li>
-                        <a href="#">@*<i class="fa fa-bar-chart-o fa-fw"></i>*@תורמים<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="@Url.Action("CreateProfile", "CreateEditProfile")">תורם חדש</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("AllDonors", "AllDonors")">רשימת תורמים</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("SearchDonor", "SearchDonor")">חפש תורם</a>
-                            </li>
-                        </ul>
+                        <a href="@Url.Action("AllDonors", "AllDonors")">רשימת תורמים</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("SearchDonor", "SearchDonor")">חפש תורם</a>
+                    </li>
+                       
                         <!-- second-level-items -->
-                    </li>
-                    <li>
+                    
+                    @*<li>
                         <a href="@Url.Action("CreateDonation", "CreateEditDonation")">
-                            @*<i class="fa fa-edit fa-fw"></i>*@ הצעת תרומה
+                            @*<i class="fa fa-edit fa-fw"></i> הצעת תרומה
                         </a>
-                    </li>
+                    </li>*@
                     <li>
                         <a href="@Url.Action("SearchDonation", "SearchDonation")">@*<i class="fa fa-flask fa-fw"></i>*@סינון/חיפוש מוצרים</a>
                     </li>

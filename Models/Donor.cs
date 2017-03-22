@@ -41,9 +41,7 @@ namespace MeyadLeyaad1.Models
         public int Floor { get; set; }
         [Required]
         public string Phone { get; set; }
-        [Required]
         public string Another_Phone { get; set; }
-        [Required]
         public string Email { get; set; }
         public string Fax { get; set; }
         public string Comments { get; set; }

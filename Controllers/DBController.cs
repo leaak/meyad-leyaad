@@ -12,7 +12,7 @@ namespace MeyadLeyaad1.Controllers
     public class DBController : Controller
     {
 
-        Database1Entities4 db = new Database1Entities4();
+        Database1Entities db = new Database1Entities();
 
         //
         // GET: /DB/
@@ -55,6 +55,8 @@ namespace MeyadLeyaad1.Controllers
         {
             Contribution origin = getContribution(c.Id_Contribution);
             c.Modified_Status_Date = DateTime.Now;
+            if (c.Status == null)
+                c.Status = "לפני סינון";
             db.Entry(origin).CurrentValues.SetValues(c);
             db.SaveChanges();
         }
