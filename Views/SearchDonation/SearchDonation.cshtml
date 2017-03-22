@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "SearchDonation";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Size = ViewBag.list.Count;
 }
 
 
@@ -110,6 +111,10 @@
                                     </table>
                                          </div>
                                     <br />
+                                    <div id="noResults" style="display:none">
+                                        <h6>לא נמצאו תוצאות</h6>
+
+                                    </div>
 
                                     <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
                                     <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
@@ -167,14 +172,18 @@
 
     }
 
+
     $(document).ready(function () {
-        var list = "@ViewBag.list";
-        if (list.length() > 0) {
-            $("#donationsList").show();
-        }
 
 
-    });
+          if ("@ViewBag.Size" > 0) {
+              $("#donationsList").show();
+          }
+          else
+              $("#noResults").show();
+
+
+      });
 
 </script>
 
