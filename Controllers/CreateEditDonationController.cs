@@ -86,6 +86,8 @@ namespace MeyadLeyaad1.Controllers
                 }
                 else
                 {
+					if(!db.getContribution(cmodel.Id_Contribution).Status.Equals("נמכר") && cmodel.Status.Equals("נמכר"))
+                        sendEmail(db.getEmailById(cmodel.Id_Donor), "תודה רבה על תרומתך");
                     db.EditDonation(cmodel);
                 }
 

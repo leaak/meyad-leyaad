@@ -290,6 +290,20 @@ namespace MeyadLeyaad1.Controllers
             return db.Contribution.Where(c => (c.Category == category && c.Sub_Category == subc && c.Position == position)).ToList();
         }
 
+        public List<DisplayDonation> getContributionsInStorehouse()
+        {
+            List<Contribution> con =  db.Contribution.Where(c => (c.Status == "במחסן")).ToList();
+            List<DisplayDonation> dDonations = new List<DisplayDonation>();
+            foreach (Contribution c in con)
+            {
+                Picture p = getPicture(c.Id_Contribution);
+                string url = p == null ? "" : "..\\" + p.Url;
+                DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, c.Status, url, c.Id_Contribution);
+                dDonations.Add(d);
+            }
+            return dDonations;
+        } 
+
       /*  public List<SubCategories> getSubCategoryByIdCotegory(int idCotegory)
         {
             return db.SubCategories.Where(m => (m.Id_Category == idCotegory)).ToList();
@@ -322,17 +336,7 @@ namespace MeyadLeyaad1.Controllers
             return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
         }
 
-        public /*List<Contribution>*/ void test(Contribution search)
-        {
-
-            String constring = ConfigurationManager.ConnectionStrings["RConnection"].ConnectionString;
-            SqlConnection con = new SqlConnection(constring);
-            string query = "select * From Employee";
-            DataTable dt = new DataTable();
-            dt.TableName = "Employee";
-            con.Open();
-            SqlDataAdapter da = new SqlDataAdapter(query, con);
-        }
+      
        
 
         public List<Contribution> serachDontions(Contribution search)
@@ -384,22 +388,35 @@ namespace MeyadLeyaad1.Controllers
 
             return address;
         }
-        //implement
+          
         public List<Contribution> getDonationByDay(string day)
         {
-            List<Contribution> donationPerDay = (from c in db.Contribution
-                                                join s in db.Schedule
-                                                on c.Id_Donor equals s.Id_User
-                                                where s.Day == day
-                                                select c).ToList();
 
-            //List<Contribution> donationPerDay =
-            //(from c in db.Contribution 
-            //join s in db.Schedule on c.Id_Donor equals s.Id_User 
-            //where s.Day == day
-            //select c).ToList();
-      
-            return donationPerDay;
+            List<Contribution> donationPerDay = new List<Contribution>();
+            List<Contribution> donationsPerDonor = new List<Contribution>();
+            List<int> id_donors =   (from d in db.Donor
+                                    join s in db.Schedule
+                                    on d.Id_Donor equals s.Id_User
+                                    where s.Day == day
+                                    orderby d.City,s.End_Time 
+                                    select d.Id_Donor).ToList();
+
+            foreach (int id in id_donors)
+            {
+                donationsPerDonor = getDonationsOfDonor(id).ToList();
+                foreach(var c in donationsPerDonor)
+                {
+                    donationPerDay.Add(c);
+                }
+            }
+            return donationsPerDonor;
+        }
+
+        public List<Contribution> getDonationsOfDonor(int id_donor)
+        {
+            //int id = getIdByEmail(email);
+            return db.Contribution.Where(c => (c.Id_Donor == id_donor)).ToList();
+
         }
 
         public List<Schedule> getScheduleForDonor(int idDonor)
