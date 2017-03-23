@@ -323,7 +323,8 @@ table.dataTable thead .sorting:after {
 
 .img-baner {
     width: 160px;
-    margin: 10px;
+    margin: 15px;
+    float:right;
 }
 
 .text {
@@ -422,12 +423,12 @@ table.dataTable thead .sorting:after {
 
 @media(min-width:768px) {
     .navbar-static-side {
-        z-index: 1;
+        z-index: 0;
         position: absolute;
         float: right;
         right: 0;
         width: 250px;
-        top: 40px;
+        top: 130px;
     }
 
     .navbar-top-links .dropdown-messages,

@@ -195,7 +195,7 @@
         <!-- end dropdown-alerts -->
     </li>*@
 
-                <li class="dropdown">
+                <li class="dropdown" style="margin-left:40px">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-3x"></i>
                     </a>
@@ -219,6 +219,9 @@
         </nav>
         <!-- end navbar top -->
         <!-- navbar side -->
+    <div style="position: absolute; width: 250px; top: 80px; right: 0; z-index: 1; height: 90px; background-color: #944eab; ">
+
+    </div>
         <nav class="navbar-default navbar-static-side" role="navigation">
             <!-- sidebar-collapse -->
             <div class="sidebar-collapse">
@@ -239,23 +242,29 @@
                         </div>
                         <!--end user image section-->
                     </li>*@
-                    <li class="sidebar-search">
+                   @* <li class="sidebar-search">
+    @*<a href="">תפריט</a>
                         <!-- search section-->
                         <div class="input-group custom-search-form">
-                            <input type="text" class="search-input" placeholder="חפש...">
-                           @* <span class="input-group-btn">
-    <button class="btn btn-default" type="button">*@
-                                    <i class="fa fa-search"></i>
-                                @*</button>
-    </span>*@
-                        </div>
-                        <!--end search section-->
+            <input type="text" class="search-input" placeholder="חפש...">
+           @* <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+        </span>
+        </div>
+        <!--end search section-->
+    </li>*@
+                    <li>
+
+                        <a href="@Url.Action("Index", "Index")">@*<i class="fa fa-dashboard fa-fw">*@</i>תפריט</a>
+
                     </li>
                     <li>
                         
                         <a href="@Url.Action("Index", "Index")">@*<i class="fa fa-dashboard fa-fw">*@</i>דף הבית</a>
-                    
-                    
+
+                    </li>
                     <li>
                         <a href="@Url.Action("CreateProfile", "CreateEditProfile")">תורם חדש</a>
                     </li>
@@ -277,7 +286,7 @@
                         <a href="@Url.Action("SearchDonation", "SearchDonation")">@*<i class="fa fa-flask fa-fw"></i>*@סינון/חיפוש מוצרים</a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Scheduler", "Scheduler")">@*<i class="fa fa-table fa-fw"></i>*@משימות נהג</a>
+                        <a href="@Url.Action("Scheduler", "Scheduler")">@*<i class="fa fa-table fa-fw"></i>*@צור לו"ז לנהג</a>
                     </li>
 
                    
@@ -286,11 +295,11 @@
                         
                          second-level-items 
                     </li>*@
-                    <li>
-                        <a href="#">@*<i class="fa fa-files-o fa-fw"></i>*@הודעות<span class="fa arrow"></span></a>
-                        
+                    @*<li>
+                        <a href="#"><i class="fa fa-files-o fa-fw"></i>הודעות<span class="fa arrow"></span></a>
+
                         <!-- second-level-items -->
-                    </li>
+                    </li>*@
                 </ul>
                 <!-- end side-menu -->
             </div>
