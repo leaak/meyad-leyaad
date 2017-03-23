@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using MeyadLeyaad1.Models;
+using System.Data.SqlClient;
 
 namespace MeyadLeyaad1.Controllers
 {
@@ -67,8 +68,6 @@ namespace MeyadLeyaad1.Controllers
         {
             Contribution origin = getContribution(c.Id_Contribution);
             c.Modified_Status_Date = DateTime.Now;
-            if (c.Status == null)
-                c.Status = "לפני סינון";
             db.Entry(origin).CurrentValues.SetValues(c);
             db.SaveChanges();
         }
@@ -347,9 +346,48 @@ namespace MeyadLeyaad1.Controllers
 
         public List<Donor> searchDonors(Donor search)
         {
-            return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
-        }
+            //return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
+            string connectionString = "Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-MeyadLeyaad1-20160923041055;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-MeyadLeyaad1-20160923041055.mdf";
+            List < string > query = new List<string>();
+            List<string> result = new List<string>();
+            List<Donor> donors = new List<Donor>();
+            // your "normal" sql here
+            string commandText = "select" +
+                                 "d ID_Donor" +
+                                " from Donor d";
+           
+            if (search.City != null && !search.City.Equals(""))
+                query.Add("d.City == search.City");
+            if (search.First_Name != null && !search.First_Name.Equals(""))
+                query.Add("d.First_Name == search.First_Name");
+                    if (search.Last_Name != null && !search.Last_Name.Equals(""))
+                query.Add("d.Last_Name == search.Last_Name");
+            if (search.Email != null && !search.Email.Equals(""))
+                query.Add("d.Email == search.Email");
 
+            for (int i = 0; i < query.Count(); i++) {
+                if (i == 0)
+                    commandText += " where ";
+                commandText += "" + query.ElementAt(i) + " ";
+                if (i < query.Count() - 1)
+                    commandText += " and ";
+             }
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand(commandText, connection);
+
+                connection.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        donors.Add(getDonor(Convert.ToInt32(reader.GetString(0))));
+                    }
+                }
+            }
+            return donors;
+        }
       
        
 
