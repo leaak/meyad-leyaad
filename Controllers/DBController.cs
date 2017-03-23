@@ -12,7 +12,7 @@ namespace MeyadLeyaad1.Controllers
     public class DBController : Controller
     {
 
-        Database1Entities db = new Database1Entities();
+        Database1Entities4 db = new Database1Entities4();
 
         //
         // GET: /DB/
@@ -35,14 +35,26 @@ namespace MeyadLeyaad1.Controllers
             return db.Users.Any(u => u.Email == Email);
         }
 
-        public void AddDonor(Donor dmodel, Schedule smodel)
+        public void AddDonor(Donor dmodel, Schedule smodel, Users umodel)
         {
-            Donor d = db.Donor.Add(new Donor { Email = dmodel.Email, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments });
+            Donor d = db.Donor.Add(new Donor { Email = umodel.User_Name, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments });
             db.SaveChanges();
             int id = d.Id_Donor;
             db.Schedule.Add(new Schedule { Day = smodel.Day, Id_User = id, End_Time = smodel.End_Time, Start_Time = smodel.Start_Time });
             db.SaveChanges();
         }
+
+        public void AddDonorBySecretaty(Donor dmodel, Schedule smodel, Users umodel)
+        {
+            
+            Donor d = db.Donor.Add(new Donor { Email = umodel.User_Name, First_Name = dmodel.First_Name, Last_Name = dmodel.Last_Name, Building = dmodel.Building, City = dmodel.City, Floor = dmodel.Floor, House = dmodel.House, Street = dmodel.Street, Phone = dmodel.Phone, Fax = dmodel.Fax, Another_Phone = dmodel.Another_Phone, Comments = dmodel.Comments });
+            db.SaveChanges();
+            int id = d.Id_Donor;
+            Users u = db.Users.Add(new Users { Email = umodel.User_Name, Id_Donor = id, Password = umodel.Password, Type = 2, User_Name = umodel.User_Name });
+            db.Schedule.Add(new Schedule { Day = smodel.Day, Id_User = id, End_Time = smodel.End_Time, Start_Time = smodel.Start_Time });
+            db.SaveChanges();
+        }
+
 
         public void EditDonor(Donor model)
         {

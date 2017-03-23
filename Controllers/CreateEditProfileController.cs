@@ -61,9 +61,15 @@ namespace MeyadLeyaad1.Controllers
             {
                 if(dmodel.Id_Donor<=0)
                 {
-                    if (Session["type"].ToString().Equals("1") || db.isEmailExists(dmodel.Email))
+                    if (Session["type"].ToString().Equals("1") || db.isEmailExists(umodel.User_Name))
                     {
-                        db.AddDonor(dmodel , smodel);
+                        if (Session["type"].ToString().Equals("1") && (!db.isEmailExists(umodel.User_Name)))
+                        {
+                            db.AddDonorBySecretaty(dmodel , smodel, umodel);
+                        }
+                        else
+
+                            db.AddDonor(dmodel , smodel, umodel);
                         return RedirectToLocal(returnUrl);
                     }
                     else
