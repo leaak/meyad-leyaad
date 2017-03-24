@@ -31,7 +31,7 @@
      
         <td><img src="@(item.PictureURL)" /></td>
         <td class="td-links"><a href="@Url.Action("EditDonation", "CreateEditDonation", new { id = @item.ID_Contribution })"> לפרטים ועריכה</a></td>
-
+        <td class="td-links"><a href="@Url.Action("Index", "Index", new { dd = @item.ID_Contribution })"> למחיקה</a></td>
 
 
     </tr>

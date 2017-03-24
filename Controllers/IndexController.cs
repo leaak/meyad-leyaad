@@ -14,8 +14,12 @@ namespace MeyadLeyaad1.Controllers
         
         // GET: /Index/
 
-        public ActionResult Index()
+        public ActionResult Index(string dd = "")
         {
+            if (!dd.Equals(""))
+            {
+                db.DeleteDonation(dd);
+            }
             List<DisplayDonation> list = db.getLatestDonations();
             ViewBag.list = list;
             return View();

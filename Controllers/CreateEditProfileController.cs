@@ -29,6 +29,13 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
+            ViewBag.day = new SelectList(new[]{"ראשון",
+"שני", "שלישי","רביעי"  , "חמישי"});
+            ViewBag.start = new SelectList(new[]{"08:00",
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00"}); 
+            ViewBag.end = new SelectList(new[]{
+"09:00", "10:00","11:00"  , "12:00","13:00", "14:00","15:00"  , "16:00" , "17:00" , "18:00" , "19:00" , "20:00"});
+           
             return View("CreateEditProfile", tuple);
         }
 
@@ -49,6 +56,9 @@ namespace MeyadLeyaad1.Controllers
                 ViewBag.layout = "~/Views/Shared/_LoyoutDonor.cshtml";
                 ViewBag.type = "donor";
             }
+			ViewBag.day = new SelectList(new[]{schedule.Day});
+            ViewBag.start = new SelectList(new[]{schedule.Start_Time});
+            ViewBag.end = new SelectList(new[]{schedule.End_Time});
             return View("CreateEditProfile", tuple);
         }
 

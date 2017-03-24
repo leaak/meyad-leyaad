@@ -1,6 +1,6 @@
 ﻿@model MeyadLeyaad1.Models.Donor
 @{
-    ViewBag.Title = "חיפוש תורם";
+    ViewBag.Title = "SearchDonor";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Size = ViewBag.list.Count;
 }
@@ -9,9 +9,6 @@
 
     <div class="row">
         <!-- page header -->
-        <div class="col-lg-12">
-            <h1 class="page-header">חיפוש תורם</h1>
-        </div>
         <!--end page header -->
     </div>
     <div class="row">
@@ -21,9 +18,9 @@
                 <div class="panel-heading">
                     חיפוש תורם
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-6">
+           
+                    <div class="row" style="margin-right: 5px;">
+        <div class="form-template">
                             <form role="form">
                                 <div class="form-group" style="width:100%; display:block">
                                     <label>מייל של התורם</label>
@@ -73,15 +70,17 @@
                                             <td><a href="@Url.Action("EditProfile", "CreateEditProfile", new { id = @item.Id_Donor })"> לפרטים ועריכה</a></td>
                                             <td><a href="@Url.Action("DonationsOfDonor", "DonationsOfDonor" , new {id = @item.Id_Donor})"> לצפיה בתרומות</a></td>
 
-
-
                                         </tr>
                                     }
                                 </table>
+                                   </div>
+
+
                                 <div id="noResults" style="display:none">
                                       <h6>לא נמצאו תוצאות</h6>
                                 
                                   </div>
+                             
 
                                 <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
                                 <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
@@ -90,8 +89,6 @@
                         </div>
 
 
-                    </div>
-                </div>
             </div>
             <!-- End Form Elements -->
         </div>

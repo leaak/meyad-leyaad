@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.Validation;
 using MeyadLeyaad1.Models;
+
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace MeyadLeyaad1.Controllers
@@ -68,8 +71,6 @@ namespace MeyadLeyaad1.Controllers
         {
             Contribution origin = getContribution(c.Id_Contribution);
             c.Modified_Status_Date = DateTime.Now;
-            if (c.Status == null)
-                c.Status = "לפני סינון";
             db.Entry(origin).CurrentValues.SetValues(c);
             db.SaveChanges();
         }
@@ -205,9 +206,15 @@ namespace MeyadLeyaad1.Controllers
 
         public  List<DisplayDonation> getLatestDonations()
         {
-            DateTime thisDay = DateTime.Today;
-            DateTime lastWeek = thisDay.AddDays(-(int)thisDay.DayOfWeek - 7);
-            List <Contribution>donations= db.Contribution.Where(c => (c.Modified_Status_Date > lastWeek)).ToList();
+
+
+            List<Contribution> donations =
+           (from c in db.Contribution
+            join s in db.Statuses
+            on c.Status equals s.Name
+            where s.Taken == false
+            select c).ToList();
+
             List<DisplayDonation> dDonations = new List<DisplayDonation>();
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
@@ -348,71 +355,61 @@ namespace MeyadLeyaad1.Controllers
 
         public List<Donor> searchDonors(Donor search)
         {
-            //return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
-            string connectionString = "Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-MeyadLeyaad1-20160923041055;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-MeyadLeyaad1-20160923041055.mdf";
-            List < string > query = new List<string>();
-            List<string> result = new List<string>();
-            List<Donor> donors = new List<Donor>();
-            // your "normal" sql here
-            string commandText = "select" +
-                                 "d ID_Donor" +
+           // return db.Donor.Where(d => (d.City == search.City || d.First_Name == search.First_Name || d.Last_Name == search.Last_Name)).ToList();
+            List<string> query = new List<string>();
+            string commandText = "select " + " * " +
                                 " from Donor d";
-           
             if (search.City != null && !search.City.Equals(""))
-                query.Add("d.City == search.City");
+                query.Add("d.City = N'" + search.City + "'");
             if (search.First_Name != null && !search.First_Name.Equals(""))
-                query.Add("d.First_Name == search.First_Name");
-                    if (search.Last_Name != null && !search.Last_Name.Equals(""))
-                query.Add("d.Last_Name == search.Last_Name");
+                query.Add("d.First_Name = N'" + search.First_Name + "'");
+            if (search.Last_Name != null && !search.Last_Name.Equals(""))
+                query.Add("d.Last_Name = N'" + search.Last_Name + "'");
             if (search.Email != null && !search.Email.Equals(""))
-                query.Add("d.Email == search.Email");
-
-            for (int i = 0; i < query.Count(); i++) {
+                query.Add("d.Email = N'" + search.Email + "'");
+            if (query.Count == 0)
+                return new List<Donor>();
+            for (int i = 0; i < query.Count(); i++)
+            {
                 if (i == 0)
                     commandText += " where ";
                 commandText += "" + query.ElementAt(i) + " ";
                 if (i < query.Count() - 1)
                     commandText += " and ";
-             }
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand(commandText, connection);
-
-                connection.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        donors.Add(getDonor(Convert.ToInt32(reader.GetString(0))));
-                    }
-                }
             }
-            return donors;
+            return db.Donor.SqlQuery(commandText).ToList();
         }
       
        
 
         public List<Contribution> serachDontions(Contribution search)
         {
-            /*return db.Contribution.Where(c=>( /*search.Category != null  && !search.Category.Equals("") &&  c.Category == search.Category))
-                 .Where(c => (/* search.Sub_Category != null &&!search.Sub_Category.Equals("") &&  c.Sub_Category == search.Sub_Category.Trim()))
-                 .Where(c => (/*search.Status != null &&  !search.Status.Equals("") && c.Status == search.Status))
-                 .Where(c => (/*search.Position != null && !search.Position.Equals("") && c.Position == search.Position)).ToList();*/
-             List<Contribution> result = (from c in db.Contribution
-                                          where (/*search.Status != null &&*/ search.Status == c.Status)
-                                          where (/*search.Category != null && */search.Category == c.Category)
-                                          where (/*search.Sub_Category != null &&*/ search.Sub_Category == c.Sub_Category)
-                                          where (/*search.Position != null &&*/ search.Position == c.Position)
-                                          select c).ToList();
+            List<string> query = new List<string>();
+            string commandText = "select " + " * " +
+                                " from Contribution d";
 
-            //List<Contribution> donationPerDay =
-            //(from c in db.Contribution 
-            //join s in db.Schedule on c.Id_Donor equals s.Id_User 
-            //where s.Day == day
-            //select c).ToList();
+            if (search.Status != null && !search.Status.Equals(""))
+                query.Add("d.Status = N'" + search.Status + "'");
+            if (search.Position != null && !search.Position.Equals(""))
+                query.Add("d.Position = N'" + search.Position + "'");
+            if (search.Category != null && !search.Category.Equals(""))
+                query.Add("d.Category = N'" + search.Category + "'");
+            if (search.Sub_Category != null && !search.Sub_Category.Equals(""))
+                query.Add("d.Sub_Category = N'" + search.Sub_Category + "'");
 
-             return result;
+            if (query.Count == 0)
+                return new List<Contribution>();
+
+            for (int i = 0; i < query.Count(); i++)
+            {
+                if (i == 0)
+                    commandText += " where ";
+                commandText += "" + query.ElementAt(i) + " ";
+                if (i < query.Count() - 1)
+                    commandText += " and ";
+            }
+
+            return db.Contribution.SqlQuery(commandText).ToList();
         }
   
 
