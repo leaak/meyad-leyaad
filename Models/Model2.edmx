@@ -4,13 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Database1Model2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Database1Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="English_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Contribution">
           <Key>
@@ -24,7 +31,8 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Modified_Status_Date" Type="date" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="years" Type="int" />
+          <Property Name="years" Type="nchar" MaxLength="10" />
+          <Property Name="Comments" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
@@ -66,11 +74,22 @@
           <Key>
             <PropertyRef Name="Id_User" />
           </Key>
+          <Property Name="Id_Schedule" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Day" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Start_Time" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="End_Time" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="Id_User" Type="int" Nullable="false" />
           <Property Name="User_Type" Type="bit" />
+          
+        </EntityType>
+        <EntityType Name="Scheduler">
+          <Key>
+            <PropertyRef Name="Id_Schedule" />
+          </Key>
+          <Property Name="Id_Schedule" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Sequence" Type="int" />
+          <Property Name="Will_Be_Taken" Type="bit" />
         </EntityType>
         <EntityType Name="Statuses">
           <Key>
@@ -98,13 +117,15 @@
           <Property Name="Type" Type="int" />
           <Property Name="User_Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityContainer Name="Database1Model2StoreContainer">
+        <EntityContainer Name="Database1Model1StoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contribution" EntityType="Self.Contribution" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donor" EntityType="Self.Donor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Picture" EntityType="Self.Picture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scheduler" EntityType="Self.Scheduler" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -113,13 +134,20 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Database1Model2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Database1Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="English_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="Contribution">
           <Key>
@@ -133,7 +161,8 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Modified_Status_Date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="years" Type="Int32" />
+          <Property Name="years" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Donor">
           <Key>
@@ -175,11 +204,22 @@
           <Key>
             <PropertyRef Name="Id_User" />
           </Key>
+          <Property Name="Id_Schedule" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Day" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Start_Time" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="End_Time" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Id_User" Type="Int32" Nullable="false" />
           <Property Name="User_Type" Type="Boolean" />
+          
+        </EntityType>
+        <EntityType Name="Scheduler">
+          <Key>
+            <PropertyRef Name="Id_Schedule" />
+          </Key>
+          <Property Name="Id_Schedule" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Sequence" Type="Int32" />
+          <Property Name="Will_Be_Taken" Type="Boolean" />
         </EntityType>
         <EntityType Name="Statuses">
           <Key>
@@ -207,13 +247,15 @@
           <Property Name="Type" Type="Int32" />
           <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="Database1Entities4" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Database1Entities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" />
           <EntitySet Name="Contribution" EntityType="Self.Contribution" />
           <EntitySet Name="Donor" EntityType="Self.Donor" />
           <EntitySet Name="Driver" EntityType="Self.Driver" />
           <EntitySet Name="Picture" EntityType="Self.Picture" />
           <EntitySet Name="Schedule" EntityType="Self.Schedule" />
+          <EntitySet Name="Scheduler" EntityType="Self.Scheduler" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" />
           <EntitySet Name="Users" EntityType="Self.Users" />
@@ -223,17 +265,25 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Database1Model2StoreContainer" CdmEntityContainer="Database1Entities4">
+        <EntityContainerMapping StorageEntityContainer="Database1Model1StoreContainer" CdmEntityContainer="Database1Entities5">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="Database1Model2.Categories">
+            <EntityTypeMapping TypeName="Database1Model1.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="Database1Model1.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="English_Name" ColumnName="English_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Contribution">
-            <EntityTypeMapping TypeName="Database1Model2.Contribution">
+            <EntityTypeMapping TypeName="Database1Model1.Contribution">
               <MappingFragment StoreEntitySet="Contribution">
                 <ScalarProperty Name="Id_Contribution" ColumnName="Id_Contribution" />
                 <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
@@ -244,11 +294,12 @@
                 <ScalarProperty Name="Modified_Status_Date" ColumnName="Modified_Status_Date" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="years" ColumnName="years" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Donor">
-            <EntityTypeMapping TypeName="Database1Model2.Donor">
+            <EntityTypeMapping TypeName="Database1Model1.Donor">
               <MappingFragment StoreEntitySet="Donor">
                 <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
@@ -267,7 +318,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Driver">
-            <EntityTypeMapping TypeName="Database1Model2.Driver">
+            <EntityTypeMapping TypeName="Database1Model1.Driver">
               <MappingFragment StoreEntitySet="Driver">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -277,7 +328,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Picture">
-            <EntityTypeMapping TypeName="Database1Model2.Picture">
+            <EntityTypeMapping TypeName="Database1Model1.Picture">
               <MappingFragment StoreEntitySet="Picture">
                 <ScalarProperty Name="Id_Picture" ColumnName="Id_Picture" />
                 <ScalarProperty Name="Id_Cotribution" ColumnName="Id_Cotribution" />
@@ -286,8 +337,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Schedule">
-            <EntityTypeMapping TypeName="Database1Model2.Schedule">
+            <EntityTypeMapping TypeName="Database1Model1.Schedule">
               <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="Id_Schedule" ColumnName="Id_Schedule" />
                 <ScalarProperty Name="Day" ColumnName="Day" />
                 <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
                 <ScalarProperty Name="End_Time" ColumnName="End_Time" />
@@ -296,8 +348,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Scheduler">
+            <EntityTypeMapping TypeName="Database1Model1.Scheduler">
+              <MappingFragment StoreEntitySet="Scheduler">
+                <ScalarProperty Name="Id_Schedule" ColumnName="Id_Schedule" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="Will_Be_Taken" ColumnName="Will_Be_Taken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Statuses">
-            <EntityTypeMapping TypeName="Database1Model2.Statuses">
+            <EntityTypeMapping TypeName="Database1Model1.Statuses">
               <MappingFragment StoreEntitySet="Statuses">
                 <ScalarProperty Name="Id_Status" ColumnName="Id_Status" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -306,7 +368,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SubCategories">
-            <EntityTypeMapping TypeName="Database1Model2.SubCategories">
+            <EntityTypeMapping TypeName="Database1Model1.SubCategories">
               <MappingFragment StoreEntitySet="SubCategories">
                 <ScalarProperty Name="Id_Category" ColumnName="Id_Category" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -314,7 +376,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="Database1Model2.Users">
+            <EntityTypeMapping TypeName="Database1Model1.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id_Donor" ColumnName="Id_Donor" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
