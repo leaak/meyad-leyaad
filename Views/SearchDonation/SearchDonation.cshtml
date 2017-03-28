@@ -23,105 +23,105 @@
                 </div>
            
                              <div class="row">
-        <div class="form-template">
-                            <form role="form">
-                                <div class="form-group" style="width:100%">
-                                   @* <div class="form-group" style="width:100%; display:block">
-                                        <label>מייל של התורם</label>
-                                        <br />
-                                        @Html.TextBoxFor(model => model.Item2.Id_Donor)
-                                    </div>*@
+                                 <div class="form-template" style="margin-right:13px">
+                                     <form role="form">
+                                         <div class="form-group" style="width:100%">
+                                             @* <div class="form-group" style="width:100%; display:block">
+                        <label>מייל של התורם</label>
+                        <br />
+                        @Html.TextBoxFor(model => model.Item2.Id_Donor)
+                    </div>*@
 
-                                    @*<div class="form-group" style="width:100%; display:block">
-                                        <label>עיר</label>
-                                        <br />
-                                        @Html.TextBoxFor(model => model.Item1.City)
-                                    </div>*@
+                                             @*<div class="form-group" style="width:100%; display:block">
+                        <label>עיר</label>
+                        <br />
+                        @Html.TextBoxFor(model => model.Item1.City)
+                    </div>*@
 
-                                     
 
-                                   <div class="form-group" style="width:50%; display:block">
-                                        <label>סטטוס מוצר</label>
-                                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.statuses)
-                                    </div>
-                                      <div class="form-group" style="width:50%; display:block">
-                                     <label>קטגוריה</label>
-                                      @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
+
+                                             <div class="form-group" style="width:50%; display:block">
+                                                 <label>סטטוס מוצר</label>
+                                                 @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.statuses)
+                                             </div>
+                                             <div class="form-group" style="width:50%; display:block">
+                                                 <label>קטגוריה</label>
+                                                 @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
                                     "מוצרי חשמל"}), new { @id = "ddlCategory", @onchange = "javascript:getSubCategory(this.value);" })
-                                        </div>
-                                      <div class="form-group" style="width:50%; display:block">
-                                     <label>תת קטגוריה</label>
-                                       @Html.DropDownListFor(m => m.Sub_Category,  new SelectList(new[]{" "}) , new { @id = "ddlSubCategory" })
-                                        </div>
+                                             </div>
+                                             <div class="form-group" style="width:50%; display:block">
+                                                 <label>תת קטגוריה</label>
+                                                 @Html.DropDownListFor(m => m.Sub_Category, new SelectList(new[] { " " }), new { @id = "ddlSubCategory" })
+                                             </div>
 
 
-                                 
-                                 @*   <div class="form-group">
+
+                                             @*   <div class="form-group">
                         <label>תת קטגוריה</label>
                         @Html.DropDownListFor(model => model.Sub_Category, new SelectList(new[]{"ארון",
                                     "ספה", "כסא","שולחן" , "מיטות", "ספריה","אחר"}))
                     </div>*@
-                                    @*<div class="form-group" style="width:20%">
-                <label>שנים בשימוש</label>
-                <br />
-                @Html.TextBoxFor(model => model.)
-                @Html.ValidationMessageFor(model => model.First_Name)
-            </div>*@
+                                             @*<div class="form-group" style="width:20%">
+                        <label>שנים בשימוש</label>
+                        <br />
+                        @Html.TextBoxFor(model => model.)
+                        @Html.ValidationMessageFor(model => model.First_Name)
+                    </div>*@
 
 
-                                    <div class="form-group" style="width:50%; display:block">
-                                        <label>מצב מוצר</label>
-                                        @Html.DropDownListFor(model => model.Position, new SelectList(new[]{"", "חדש באריזה",
+                                             <div class="form-group" style="width:50%; display:block">
+                                                 <label>מצב מוצר</label>
+                                                 @Html.DropDownListFor(model => model.Position, new SelectList(new[]{"", "חדש באריזה",
 "כמו חדש", "משומש","דרוש תיקון או שיפוץ"}))
-                                    </div>
+                                             </div>
 
-                                    <br />
-                                     <div id="donationsList" style="display:none">
-                                    <table class="table-gray" style=" width:100%" >
-                                     
-                                           <tr>
-                                            <th>קטגוריה</th>
-                                            <th>תת קטגוריה</th>
-                                               <th>סטטוס</th>
-                                            <th>מצב</th>
-                                            <th>תיאור</th>
-                                               <th>תאריך שינוי אחרון</th>
-        
-    
-                                        </tr>
-                                     
-                                        @foreach (var item in ViewBag.list)
-                                        {
-                                            <tr>
+                                             <br />
+                                             <div id="donationsList" style="display:none">
+                                                 <table class="table-gray" style=" width:100%">
+
+                                                     <tr>
+                                                         <th>קטגוריה</th>
+                                                         <th>תת קטגוריה</th>
+                                                         <th>סטטוס</th>
+                                                         <th>מצב</th>
+                                                         <th>תיאור</th>
+                                                         <th>תאריך שינוי אחרון</th>
 
 
-                                                <td>@item.Category</td>
-                                                <td>@item.Sub_Category</td>
-                                                <td>@item.Status</td>
-                                                <td>@item.Position</td>
-                                                <td>@item.Description</td>
-                                                <td>@item.Modified_Status_Date</td>
-                                                <td><a href="@Url.Action("EditingDonation", "AddingDonation" , item)">לפרטים ועריכה</a></td>
+                                                     </tr>
+
+                                                     @foreach (var item in ViewBag.list)
+                                                     {
+                                                         <tr>
+
+
+                                                             <td>@item.Category</td>
+                                                             <td>@item.Sub_Category</td>
+                                                             <td>@item.Status</td>
+                                                             <td>@item.Position</td>
+                                                             <td>@item.Description</td>
+                                                             <td>@item.Modified_Status_Date</td>
+                                                             <td><a href="@Url.Action("EditingDonation", "AddingDonation" , item)">לפרטים ועריכה</a></td>
 
 
 
-                                            </tr>
-                                        }
-                                    </table>
+                                                         </tr>
+                                                     }
+                                                 </table>
+                                             </div>
+
+                                             <br />
+                                             <div id="noResults" style="display:none">
+                                                 <h6>לא נמצאו תוצאות</h6>
+
+                                             </div>
+
+                                             <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
+                                             <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
                                          </div>
-                                   
-                                    <br />
-                                       <div id="noResults" style="display:none">
-                                      <h6>לא נמצאו תוצאות</h6>
-                                
-                                  </div>
+                                     </form>
 
-                                    <button type="submit" class="btn btn-primary" style="float: right; display: block">חפש</button>
-                                    <button type="reset" class="btn btn-success" style="float:right; display:block">אפס שדות</button>
-                                </div>
-                            </form>
-
-                    </div>
+                                 </div>
                 </div>
             </div>
             <!-- End Form Elements -->

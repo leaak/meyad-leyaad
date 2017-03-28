@@ -523,7 +523,7 @@ table.dataTable thead .sorting:after {
         height: 20px;
     }
     .form-template .form-group input[type="text"], .form-template .form-group select{
-        background: rgb(240, 238, 238);
+        background: #ddd;
         border-radius: 0;
         border:none;
         height: 25px;

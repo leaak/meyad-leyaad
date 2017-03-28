@@ -11,13 +11,9 @@ namespace MeyadLeyaad1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Generic;
+    using System.Data.Entity;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity;
-    using System.Globalization;
-    using System.Web.Security;
-
     
     public partial class Contribution
     {
@@ -34,6 +30,7 @@ namespace MeyadLeyaad1.Models
         public string Description { get; set; }
         public System.DateTime Modified_Status_Date { get; set; }
         public string Status { get; set; }
-        public Nullable<int> years { get; set; }
+        public string years { get; set; }
+        public string Comments { get; set; }
     }
 }

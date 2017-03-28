@@ -43,7 +43,9 @@ namespace MeyadLeyaad1.Controllers
         {
             if (id == -1)
                 id = db.getUserId(Session["email"].ToString(), Session["password"].ToString());
-            var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), db.getScheduleForDonor(id).FirstOrDefault(), new Users());
+
+            Schedule schedule = db.getScheduleForDonor(id).FirstOrDefault();
+            var tuple = new Tuple<Donor, Schedule, Users>(db.getDonor(id), schedule, new Users());
 
             ViewBag.UserName = Session["email"];
             if (Session["type"].ToString().Equals("1"))

@@ -81,13 +81,13 @@ namespace MeyadLeyaad1.Controllers
                     else
                         idContribution = db.AddDonation(cmodel , cmodel.Id_Donor);
 
-                
-                    sendEmail("rivkirom4@gmail.com", "תודה רבה על תרומתך, נבחן את ההצעה וניצור איתך קשר");
+
+                    sendEmail(db.getEmailById(cmodel.Id_Donor), "תודה רבה על תרומתך, נבחן את ההצעה וניצור איתך קשר", "תרומתך נקלטה במערכת");
                 }
                 else
                 {
 					if(!db.getContribution(cmodel.Id_Contribution).Status.Equals("נמכר") && cmodel.Status.Equals("נמכר"))
-                        sendEmail(db.getEmailById(cmodel.Id_Donor), "תודה רבה על תרומתך");
+                        sendEmail(db.getEmailById(cmodel.Id_Donor) , "תרומתך הועברה לנזקק", "תודה רבה על תרומתך");
                     db.EditDonation(cmodel);
                 }
 
@@ -130,13 +130,12 @@ namespace MeyadLeyaad1.Controllers
      
 
 
-        public void sendEmail(string email, string msg)
+        public void sendEmail(string email, string msg , string subject)
         {
             var fromAddress = new MailAddress("meyadleyaadoffice@gmail.com", "מיד ליעד");
             string mail = email;
             var toAddress = new MailAddress(mail);
             const string fromPassword = "office123!";
-            const string subject = "תרומתך נקלטה במערכת";
             //string msg = "Hi " + d.get_client_name_according_to_user_name(UserName.Text) + ",\nyour password is " + d.getPassword(UserName.Text);
             string body = msg;
 

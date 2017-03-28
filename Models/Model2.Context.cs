@@ -13,10 +13,10 @@ namespace MeyadLeyaad1.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Database1Entities4 : DbContext
+    public partial class Database1Entities5 : DbContext
     {
-        public Database1Entities4()
-            : base("name=Database1Entities4")
+        public Database1Entities5()
+            : base("name=Database1Entities5")
         {
         }
     
@@ -26,11 +26,13 @@ namespace MeyadLeyaad1.Models
         }
     
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Cities> Cities { get; set; }
         public DbSet<Contribution> Contribution { get; set; }
         public DbSet<Donor> Donor { get; set; }
         public DbSet<Driver> Driver { get; set; }
         public DbSet<Picture> Picture { get; set; }
         public DbSet<Schedule> Schedule { get; set; }
+        public DbSet<Scheduler> Scheduler { get; set; }
         public DbSet<Statuses> Statuses { get; set; }
         public DbSet<SubCategories> SubCategories { get; set; }
         public DbSet<Users> Users { get; set; }
