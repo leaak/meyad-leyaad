@@ -16,7 +16,7 @@ namespace MeyadLeyaad1.Controllers
     public class DBController : Controller
     {
 
-        Database1Entities4 db = new Database1Entities4();
+        Database1Entities5 db = new Database1Entities5();
 
         //
         // GET: /DB/
@@ -285,7 +285,7 @@ namespace MeyadLeyaad1.Controllers
             List<DisplayDonation> dDonations = new List<DisplayDonation>();
             foreach(Contribution c in donations){
                 Picture p = getPicture(c.Id_Contribution);
-                string url = p == null ? "" : "..\\" + p.Url;
+                string url = p == null ? "" : "D:\\finalProject\\MeyadLeyaad1_2-update\\MeyadLeyaad1_24.11\\MeyadLeyaad1\\" + p.Url;
                 DisplayDonation d = new DisplayDonation(c.Category, c.Sub_Category, c.Status , url, c.Id_Contribution);
                 dDonations.Add(d);
             }

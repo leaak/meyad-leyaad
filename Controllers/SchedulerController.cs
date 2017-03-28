@@ -52,7 +52,7 @@ namespace MeyadLeyaad1.Controllers
             
             Dictionary<string,string> details = new Dictionary<string,string>();
             Donor donor;
-          
+        //var json = https://maps.googleapis.com/maps/api/directions/json?origin=Khouribga&destination=Casablanca;
             foreach (var donation in donationPerDay)
             {
                 List<Dictionary<string,string>> lst= new List<Dictionary<string,string>>();

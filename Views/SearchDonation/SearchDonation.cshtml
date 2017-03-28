@@ -32,6 +32,7 @@
                         @Html.TextBoxFor(model => model.Item2.Id_Donor)
                     </div>*@
 
+<<<<<<< HEAD
                                              @*<div class="form-group" style="width:100%; display:block">
                         <label>עיר</label>
                         <br />
@@ -47,6 +48,23 @@
                                              <div class="form-group" style="width:50%; display:block">
                                                  <label>קטגוריה</label>
                                                  @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
+=======
+                                    @*<div class="form-group" style="width:100%; display:block">
+                                        <label>עיר</label>
+                                        <br />
+                                        @Html.TextBoxFor(model => model.Item1.City)
+                                    </div>*@
+
+                                     
+
+                                   <div class="form-group" style="width:50%; display:block">
+                                        <label>סטטוס מוצר</label>
+                                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.statuses)
+                                    </div>
+                                      <div class="form-group" style="width:50%; display:block">
+                                     <label>קטגוריה</label>
+                                      @Html.DropDownListFor(m => m.Category, new SelectList(new[]{" ", "ריהוט",
+>>>>>>> d9771281414a7c47f10a6eba1033adb6097341c3
                                     "מוצרי חשמל"}), new { @id = "ddlCategory", @onchange = "javascript:getSubCategory(this.value);" })
                                              </div>
                                              <div class="form-group" style="width:50%; display:block">
